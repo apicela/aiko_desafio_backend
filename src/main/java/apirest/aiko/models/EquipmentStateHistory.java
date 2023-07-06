@@ -5,17 +5,19 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Entity
 @Table(name = "equipment_state_history", schema = "operation")
+@Data
+@NoArgsConstructor
 public class EquipmentStateHistory implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -46,8 +48,6 @@ public class EquipmentStateHistory implements Serializable {
     @Column(name = "equipment_state_id", nullable = false, insertable = false, updatable = false)
     private UUID equipment_state_id;
 
-    public EquipmentStateHistory() {
-    }
     public EquipmentStateHistory(EquipmentStateHistoryDTO equipmentStateHistoryDTO) {
         equipmentState = new EquipmentState();
         equipment = new Equipment();
@@ -57,37 +57,9 @@ public class EquipmentStateHistory implements Serializable {
         equipmentSH_id.setDate(equipmentStateHistoryDTO.getDate());
     }
 
-    public UUID getEquipment_id() {
-        return equipment_id;
-    }
-
-    public void setEquipment_id(UUID equipment_id) {
-        this.equipment_id = equipment_id;
-    }
-
-    public UUID getEquipment_state_id() {
-        return equipment_state_id;
-    }
-
-    public void setEquipment_state_id(UUID equipment_state_id) {
-        this.equipment_state_id = equipment_state_id;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
-
     @JsonIgnore
     public EquipmentSH_ID getEquipmentSH_id() {
         return equipmentSH_id;
-    }
-
-    public void setEquipmentSH_id(EquipmentSH_ID equipmentSH_id) {
-        this.equipmentSH_id = equipmentSH_id;
     }
 
     @JsonIgnore
@@ -95,19 +67,11 @@ public class EquipmentStateHistory implements Serializable {
         return equipment;
     }
 
-    public void setEquipment(Equipment equipment) {
-        this.equipment = equipment;
-    }
 
     @JsonIgnore
     public EquipmentState getEquipmentState() {
         return equipmentState;
     }
-
-    public void setEquipmentState(EquipmentState equipmentState) {
-        this.equipmentState = equipmentState;
-    }
-
     @Override
     public String toString() {
         return "Equipment State History" +
@@ -117,6 +81,8 @@ public class EquipmentStateHistory implements Serializable {
     }
 
     @Embeddable
+    @Data
+    @NoArgsConstructor
     public static class EquipmentSH_ID implements Serializable {
 
         @Column(name = "equipment_id", nullable = false)
@@ -127,37 +93,11 @@ public class EquipmentStateHistory implements Serializable {
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
         private LocalDateTime date;
 
-        public EquipmentSH_ID() {
-        }
-
         public EquipmentSH_ID(UUID equipment_id, LocalDateTime date, UUID state_id) {
             this.equipment_id = equipment_id;
             this.date = date;
             this.equipment_state_id = state_id;
         }
 
-        public UUID getEquipment_id() {
-            return equipment_id;
-        }
-
-        public void setEquipment_id(UUID equipment_id) {
-            this.equipment_id = equipment_id;
-        }
-
-        public UUID getEquipment_state_id() {
-            return equipment_state_id;
-        }
-
-        public void setEquipment_state_id(UUID equipment_state_id) {
-            this.equipment_state_id = equipment_state_id;
-        }
-
-        public LocalDateTime getDate() {
-            return date;
-        }
-
-        public void setDate(LocalDateTime date) {
-            this.date = date;
-        }
     }
 }

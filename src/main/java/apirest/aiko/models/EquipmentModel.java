@@ -3,12 +3,16 @@ package apirest.aiko.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Data
+@NoArgsConstructor
 @Table(name = "equipment_model", schema = "operation")
 public class EquipmentModel implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -18,7 +22,6 @@ public class EquipmentModel implements Serializable {
     @JsonProperty("equipment_model_id")
     private UUID id;
 
-    @Column(nullable = false)
     private String name;
 
 
@@ -29,50 +32,21 @@ public class EquipmentModel implements Serializable {
     private List<EquipmentModelStateHourlyEarnings> equipmentModelStateHourlyEarnings;
 
 
-    //Getters and Setters
-
+    //Json ignore on @Data
 
     @JsonIgnore
     public List<EquipmentModelStateHourlyEarnings> getEquipmentModelStateHourlyEarnings() {
         return equipmentModelStateHourlyEarnings;
     }
 
-    public void setEquipmentModelStateHourlyEarnings(List<EquipmentModelStateHourlyEarnings> equipmentModelStateHourlyEarnings) {
-        this.equipmentModelStateHourlyEarnings = equipmentModelStateHourlyEarnings;
+    @JsonIgnore
+    public List<Equipment> getEquipments() {
+        return equipments;
     }
-
-
     @Override
     public String toString() {
         return "Equipment Model:\n" +
                 "Id:" + id +
                 "\nName:" + name;
     }
-
-    @JsonIgnore
-    public List<Equipment> getEquipments() {
-        return equipments;
-    }
-
-    public void setEquipments(List<Equipment> equipments) {
-        this.equipments = equipments;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
 }

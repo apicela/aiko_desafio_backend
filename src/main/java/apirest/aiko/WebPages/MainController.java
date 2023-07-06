@@ -18,7 +18,7 @@ public class MainController {
     final EquipmentPositionHistoryService equipmentPositionHistoryService;
 
     public MainController(EquipmentStateHistoryService equipmentStateHistoryService,
-                          EquipmentPositionHistoryService equipmentPositionHistoryService) {
+        EquipmentPositionHistoryService equipmentPositionHistoryService) {
         this.equipmentStateHistoryService = equipmentStateHistoryService;
         this.equipmentPositionHistoryService = equipmentPositionHistoryService;
     }

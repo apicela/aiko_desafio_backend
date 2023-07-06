@@ -3,6 +3,8 @@ package apirest.aiko.models;
 import apirest.aiko.dtos.EquipmentDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -12,15 +14,20 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "equipment", schema = "operation")
+@Data
+@NoArgsConstructor
 public class Equipment implements Serializable {
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue
     private UUID id;
-    @Column(nullable = false)
+
     private String name;
+
     @Column(insertable = false, updatable = false)
     private UUID equipment_model_id;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "equipment_model_id", referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "fk_equipment_model"),
@@ -32,9 +39,6 @@ public class Equipment implements Serializable {
     @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL)
     private List<EquipmentStateHistory> equipmentStateHistories;
 
-    public Equipment() {
-    }
-
     public Equipment(EquipmentDTO equipmentDTO) {
         equipmentModel = new EquipmentModel();
         equipmentModel.setId(equipmentDTO.getEquipment_model_id());
@@ -45,41 +49,9 @@ public class Equipment implements Serializable {
 
     //Getters and Setters
 
-    public UUID getEquipment_model_id() {
-        return equipment_model_id;
-    }
-
-    public void setEquipment_model_id(UUID equipment_model_id) {
-        this.equipment_model_id = equipment_model_id;
-    }
-
-
     @JsonIgnore
     public EquipmentModel getEquipmentModel() {
         return equipmentModel;
-    }
-
-    public void setEquipmentModel(EquipmentModel equipmentModel) {
-        this.equipmentModel = equipmentModel;
-    }
-
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @JsonIgnore
@@ -87,20 +59,10 @@ public class Equipment implements Serializable {
         return equipmentPositionHistories;
     }
 
-    public void setEquipmentPositionHistories(List<EquipmentPositionHistory> equipmentPositionHistories) {
-        this.equipmentPositionHistories = equipmentPositionHistories;
-    }
-
-
     @JsonIgnore
     public List<EquipmentStateHistory> getEquipmentStateHistories() {
         return equipmentStateHistories;
     }
-
-    public void setEquipmentStateHistories(List<EquipmentStateHistory> equipmentStateHistories) {
-        this.equipmentStateHistories = equipmentStateHistories;
-    }
-
     @Override
     public String toString() {
         return "Equipment:\n" +
@@ -109,4 +71,5 @@ public class Equipment implements Serializable {
                 + "\nequipment_model_id:" + equipmentModel.getId()
                 ;
     }
+
 }

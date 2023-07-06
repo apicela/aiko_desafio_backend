@@ -4,16 +4,11 @@ package apirest.aiko.controllers;
 import apirest.aiko.dtos.EquipmentModelStateHourlyEarningsDTO;
 import apirest.aiko.models.EquipmentModelStateHourlyEarnings;
 import apirest.aiko.services.EquipmentModelStateHourlyEarningsService;
-import com.fasterxml.jackson.annotation.JsonMerge;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

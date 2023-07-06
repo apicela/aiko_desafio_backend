@@ -2,19 +2,16 @@ package apirest.aiko.controllers;
 
 import apirest.aiko.dtos.EquipmentPositionHistoryDTO;
 import apirest.aiko.models.EquipmentPositionHistory;
-import apirest.aiko.models.EquipmentStateHistory;
 import apirest.aiko.services.EquipmentPositionHistoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
