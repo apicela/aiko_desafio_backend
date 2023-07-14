@@ -6,6 +6,7 @@ import apirest.aiko.services.EquipmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,6 @@ import java.util.UUID;
 @Tag(name = "3. Equipment ", description = "CRUD")
 @RequestMapping("/equipment")
 @CrossOrigin("*")
-
 public class EquipmentController {
     final EquipmentService equipmentService;
 
@@ -30,8 +30,7 @@ public class EquipmentController {
     @PostMapping
     @Operation(summary = "CREATE", description = "Here, you can create a new object for your entity")
     public ResponseEntity<Object> saveEquipment(@RequestBody @Valid EquipmentDTO equipmentDTO) {
-        var equipmentModel = new Equipment(equipmentDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Created successfully." + equipmentService.save(equipmentModel));
+        return ResponseEntity.status(HttpStatus.CREATED).body("Created successfully." + equipmentService.save(equipmentDTO));
     }
 
     @GetMapping
@@ -69,10 +68,8 @@ public class EquipmentController {
         if (!equipmentModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Equipment not found.");
         }
-        var equipmentModel = new Equipment(equipmentDto);
-        equipmentModel.setId(equipmentModelOptional.get().getId());
         return ResponseEntity.status(HttpStatus.OK).body("Equipment changed with sucesfull!\n"
-                + equipmentService.save(equipmentModel));
+                + equipmentService.save(equipmentDto));
 
     }
 

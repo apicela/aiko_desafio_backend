@@ -12,11 +12,9 @@ import java.util.UUID;
 public class EquipmentDTO {
 
     @NotBlank
-    @JsonProperty("name")
     private String name;
 
     @NotNull
-    @JsonProperty("equipment_model_id")
     private UUID equipment_model_id;
 
     public EquipmentDTO(String name, UUID equipmentModelId) {
