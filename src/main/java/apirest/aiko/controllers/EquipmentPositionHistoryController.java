@@ -22,6 +22,8 @@ import java.util.UUID;
 @Tag(name = "7. Equipment Position History", description = "CRUD")
 
 public class EquipmentPositionHistoryController {
+    public static final String ENDPOINT = "/equipment_position_history";
+
     final EquipmentPositionHistoryService equipmentPositionHistoryService;
 
     public EquipmentPositionHistoryController(EquipmentPositionHistoryService equipmentPositionHistoryService) {
@@ -46,6 +48,9 @@ public class EquipmentPositionHistoryController {
     public ResponseEntity<Object> getOneEquipmentPositionHistory(
             @PathVariable(value = "equipment_id") UUID equipment_id,
             @PathVariable(value = "date") LocalDateTime date) {
+        if (equipment_id == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
+        }
         EquipmentPositionHistory.EquipmentPositionHistoryPK compositeKey = new EquipmentPositionHistory.EquipmentPositionHistoryPK(equipment_id, date);
         Optional<EquipmentPositionHistoryDTO> equipmentPositionHistoryModelOptional = equipmentPositionHistoryService.findById(compositeKey);
         if (!equipmentPositionHistoryModelOptional.isPresent()) {
@@ -59,6 +64,9 @@ public class EquipmentPositionHistoryController {
     public ResponseEntity<Object> deleteEquipmentPositionHistory(
             @PathVariable(value = "equipment_id") UUID equipment_id,
             @PathVariable(value = "date") LocalDateTime date) {
+        if (equipment_id == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
+        }
         EquipmentPositionHistory.EquipmentPositionHistoryPK compositeKey = new EquipmentPositionHistory.EquipmentPositionHistoryPK(equipment_id, date);
         Optional<EquipmentPositionHistoryDTO> equipmentPositionHistoryModelOptional = equipmentPositionHistoryService.findById(compositeKey);
         if (!equipmentPositionHistoryModelOptional.isPresent()) {
@@ -74,6 +82,9 @@ public class EquipmentPositionHistoryController {
             @PathVariable(value = "equipment_id") UUID equipment_id,
             @PathVariable(value = "date") String customDate,
             @RequestBody @Valid EquipmentPositionHistoryDTO equipmentPositionHistoryDto) {
+        if (equipment_id == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
+        }
         LocalDateTime date = LocalDateTime.parse(customDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         var compositeKey = new EquipmentPositionHistory.EquipmentPositionHistoryPK(equipment_id, date);
         Optional<EquipmentPositionHistoryDTO> equipmentPositionHistoryModelOptional = equipmentPositionHistoryService.findById(compositeKey);

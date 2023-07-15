@@ -19,6 +19,8 @@ import java.util.UUID;
 @Tag(name = "2. Equipment Model", description = "CRUD")
 
 public class EquipmentModelController {
+    public static final String ENDPOINT = "/equipment_model";
+
     final EquipmentModelService equipmentModelService;
 
     public EquipmentModelController(EquipmentModelService equipmentModelService) {
@@ -41,6 +43,9 @@ public class EquipmentModelController {
     @GetMapping("/{id}")
     @Operation(summary = "Find object by Id", description = "Here, you can get a specific object filtering by your ID")
     public ResponseEntity<Object> getOneEquipmentModelModel(@PathVariable(value = "id") UUID id) {
+        if (id == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
+        }
         Optional<EquipmentModelDTO> equipmentModelModelOptional = equipmentModelService.findById(id);
         if (!equipmentModelModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentModelModel not found.");
@@ -51,6 +56,9 @@ public class EquipmentModelController {
     @DeleteMapping("/{id}")
     @Operation(summary = "DELETE", description = "Here, you can delete a specific object by your ID")
     public ResponseEntity<Object> deleteEquipmentModelModel(@PathVariable(value = "id") UUID id) {
+        if (id == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
+        }
         Optional<EquipmentModelDTO> equipmentModelModelOptional = equipmentModelService.findById(id);
         if (!equipmentModelModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentModelModel not found.");
@@ -63,6 +71,9 @@ public class EquipmentModelController {
     @Operation(summary = "EDIT", description = "Here, you can edit infos about an specific ID")
     public ResponseEntity<Object> updateEquipmentModelModel(@PathVariable(value = "id") UUID id,
                                                             @RequestBody @Valid EquipmentModelDTO equipmentModelDto) {
+        if (id == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
+        }
         Optional<EquipmentModelDTO> equipmentModelModelOptional = equipmentModelService.findById(id);
         if (!equipmentModelModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentModelModel not found.");
