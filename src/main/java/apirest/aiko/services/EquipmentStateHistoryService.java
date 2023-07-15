@@ -18,9 +18,8 @@ public class EquipmentStateHistoryService {
     final EquipmentStateHistoryRepository equipmentStateHistoryRepository;
     final EquipmentStateHistoryMapper mapper;
 
-    public List<EquipmentStateHistoryDTO> findAll() {
-        List<EquipmentStateHistory> list = equipmentStateHistoryRepository.findAll();
-        return mapper.mapEntityListToDtoList(list);
+    public List<EquipmentStateHistory> findAll() {
+        return equipmentStateHistoryRepository.findAll();
     }
 
     public List<EquipmentStateHistoryDTO> findLastState() {

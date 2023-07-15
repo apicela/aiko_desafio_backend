@@ -40,7 +40,7 @@ public class EquipmentStateHistoryController {
 
     @GetMapping
     @Operation(summary = "Get all objects", description = "Here, you can get a list of objects")
-    public ResponseEntity<List<EquipmentStateHistoryDTO>> getAllEquipmentStateHistory() {
+    public ResponseEntity<List<EquipmentStateHistory>> getAllEquipmentStateHistory() {
         return ResponseEntity.status(HttpStatus.OK).body(equipmentStateHistoryService.findAll());
     }
 
