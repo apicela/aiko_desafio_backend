@@ -3,6 +3,7 @@ package apirest.aiko.models;
 import apirest.aiko.dtos.EquipmentDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Table(name = "equipment", schema = "operation")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Equipment implements Serializable {
     private static final long serialVersionUID = 1L;
 

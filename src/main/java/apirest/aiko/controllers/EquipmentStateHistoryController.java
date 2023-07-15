@@ -17,12 +17,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/equipment-shc")
+@RequestMapping("/equipment_shc")
 @CrossOrigin("*")
 @Tag(name = "6. Equipment State History", description = "CRUD")
 
 public class EquipmentStateHistoryController {
     final EquipmentStateHistoryService equipmentStateHistoryService;
+    public static final String ENDPOINT = "/equipment_shc";
 
     public EquipmentStateHistoryController(EquipmentStateHistoryService equipmentStateHistoryService) {
         this.equipmentStateHistoryService = equipmentStateHistoryService;
@@ -40,7 +41,7 @@ public class EquipmentStateHistoryController {
 
     @GetMapping
     @Operation(summary = "Get all objects", description = "Here, you can get a list of objects")
-    public ResponseEntity<List<EquipmentStateHistoryDTO>> getAllEquipmentStateHistory() {
+    public ResponseEntity<List<EquipmentStateHistory>> getAllEquipmentStateHistory() {
         return ResponseEntity.status(HttpStatus.OK).body(equipmentStateHistoryService.findAll());
     }
 
@@ -50,6 +51,9 @@ public class EquipmentStateHistoryController {
             @PathVariable(value = "equipment_id") UUID equipment_id,
             @PathVariable(value = "date") String customDate,
             @PathVariable(value = "state_id") UUID state_id) {
+        if (equipment_id == null || state_id == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
+        }
         LocalDateTime date = LocalDateTime.parse(customDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         var compositeKey = new EquipmentStateHistory.EquipmentSH_ID(equipment_id, date, state_id);
         Optional<EquipmentStateHistoryDTO> equipmentStateHistoryModelOptional = equipmentStateHistoryService.findById(compositeKey);
@@ -65,6 +69,9 @@ public class EquipmentStateHistoryController {
             @PathVariable(value = "equipment_id") UUID equipment_id,
             @PathVariable(value = "date") String customDate,
             @PathVariable(value = "state_id") UUID state_id) {
+        if (equipment_id == null || state_id == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
+        }
         LocalDateTime date = LocalDateTime.parse(customDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         var compositeKey = new EquipmentStateHistory.EquipmentSH_ID(equipment_id, date, state_id);
         Optional<EquipmentStateHistoryDTO> equipmentStateHistoryModelOptional = equipmentStateHistoryService.findById(compositeKey);
@@ -85,6 +92,9 @@ public class EquipmentStateHistoryController {
                                                               @PathVariable(value = "date") String customDate,
                                                               @PathVariable(value = "state_id") UUID state_id,
                                                               @RequestBody @Valid EquipmentStateHistoryDTO equipmentStateHistoryDTO) {
+        if (equipment_id == null || state_id == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
+        }
         LocalDateTime date = LocalDateTime.parse(customDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         var compositeKey = new EquipmentStateHistory.EquipmentSH_ID(equipment_id, date, state_id);
         Optional<EquipmentStateHistoryDTO> equipmentStateHistoryModelOptional = equipmentStateHistoryService.findById(compositeKey);

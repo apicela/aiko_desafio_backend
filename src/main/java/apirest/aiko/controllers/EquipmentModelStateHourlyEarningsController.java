@@ -21,6 +21,8 @@ import java.util.UUID;
 @Tag(name = "5. Equipment Model State Hourly Earnings", description = "CRUD")
 
 public class EquipmentModelStateHourlyEarningsController {
+    public static final String ENDPOINT = "/equipment_model_state_hourly_earnings";
+
     final EquipmentModelStateHourlyEarningsService equipmentModelStateHourlyEarningsService;
 
     public EquipmentModelStateHourlyEarningsController(EquipmentModelStateHourlyEarningsService equipmentModelStateHourlyEarningsService) {
@@ -45,6 +47,9 @@ public class EquipmentModelStateHourlyEarningsController {
     public ResponseEntity<Object> getOneEquipmentModelStateHourlyEarnings(
             @PathVariable(value = "model_ID") UUID model_ID,
             @PathVariable(value = "state_ID") UUID state_ID) {
+        if (model_ID == null || state_ID == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
+        }
         var compositeKey = new EquipmentModelStateHourlyEarnings.EquipmentMSHE_ID(model_ID, state_ID);
         Optional<EquipmentModelStateHourlyEarningsDTO> equipmentModelStateHourlyEarningsModelOptional = equipmentModelStateHourlyEarningsService.findById(compositeKey);
         if (!equipmentModelStateHourlyEarningsModelOptional.isPresent()) {
@@ -58,6 +63,9 @@ public class EquipmentModelStateHourlyEarningsController {
     public ResponseEntity<Object> deleteEquipmentModelStateHourlyEarnings(
             @PathVariable(value = "model_ID") UUID model_ID,
             @PathVariable(value = "state_ID") UUID state_ID) {
+        if (model_ID == null || state_ID == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
+        }
         var compositeKey = new EquipmentModelStateHourlyEarnings.EquipmentMSHE_ID(model_ID, state_ID);
         Optional<EquipmentModelStateHourlyEarningsDTO> equipmentModelStateHourlyEarningsModelOptional = equipmentModelStateHourlyEarningsService.findById(compositeKey);
         if (!equipmentModelStateHourlyEarningsModelOptional.isPresent()) {
@@ -73,6 +81,9 @@ public class EquipmentModelStateHourlyEarningsController {
             @PathVariable(value = "model_ID") UUID model_ID,
             @PathVariable(value = "state_ID") UUID state_ID,
             @RequestBody @Valid EquipmentModelStateHourlyEarningsDTO equipmentModelStateHourlyEarningsDto) {
+        if (model_ID == null || state_ID == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
+        }
         var compositeKey = new EquipmentModelStateHourlyEarnings.EquipmentMSHE_ID(model_ID, state_ID);
         Optional<EquipmentModelStateHourlyEarningsDTO> equipmentModelStateHourlyEarningsModelOptional = equipmentModelStateHourlyEarningsService.findById(compositeKey);
         if (!equipmentModelStateHourlyEarningsModelOptional.isPresent()) {

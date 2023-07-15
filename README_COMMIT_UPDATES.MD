@@ -18,4 +18,11 @@
 <br>- Movendo /src/main/java/apirest/aiko/<b>testes/unitarios</b> para src\test\java\apirest\aiko\testes\unitarios </i>
 <br><br>
 
+<b> • H2,update services, builders created and mock test<br><br></b>
+<i> - Configurando banco H2 para testes
+<br>- Adicionando @APIResponses no Service
+<br>- Criando builders de DTO's e entidades
+<br>- Mock teste de Equipment </i>
+<br><br>
+
 
