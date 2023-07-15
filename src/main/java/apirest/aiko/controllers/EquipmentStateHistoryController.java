@@ -35,13 +35,12 @@ public class EquipmentStateHistoryController {
             "<br>03b2d446-e3ba-4c82-8dc2-a5611fea6e1f = Maintenance" +
             "<br>0808344c-454b-4c36-89e8-d7687e692d57 = Operating")
     public ResponseEntity<Object> saveEquipmentStateHistory(@RequestBody @Valid EquipmentStateHistoryDTO equipmentStateHistoryDTO) {
-        var equipmentStateHistoryModel = new EquipmentStateHistory(equipmentStateHistoryDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Created successfully." + equipmentStateHistoryService.save(equipmentStateHistoryModel));
+        return ResponseEntity.status(HttpStatus.CREATED).body("Created successfully." + equipmentStateHistoryService.save(equipmentStateHistoryDTO));
     }
 
     @GetMapping
     @Operation(summary = "Get all objects", description = "Here, you can get a list of objects")
-    public ResponseEntity<List<EquipmentStateHistory>> getAllEquipmentStateHistory() {
+    public ResponseEntity<List<EquipmentStateHistoryDTO>> getAllEquipmentStateHistory() {
         return ResponseEntity.status(HttpStatus.OK).body(equipmentStateHistoryService.findAll());
     }
 
@@ -53,7 +52,7 @@ public class EquipmentStateHistoryController {
             @PathVariable(value = "state_id") UUID state_id) {
         LocalDateTime date = LocalDateTime.parse(customDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         var compositeKey = new EquipmentStateHistory.EquipmentSH_ID(equipment_id, date, state_id);
-        Optional<EquipmentStateHistory> equipmentStateHistoryModelOptional = equipmentStateHistoryService.findById(compositeKey);
+        Optional<EquipmentStateHistoryDTO> equipmentStateHistoryModelOptional = equipmentStateHistoryService.findById(compositeKey);
         if (!equipmentStateHistoryModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentStateHistory not found.");
         }
@@ -68,7 +67,7 @@ public class EquipmentStateHistoryController {
             @PathVariable(value = "state_id") UUID state_id) {
         LocalDateTime date = LocalDateTime.parse(customDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         var compositeKey = new EquipmentStateHistory.EquipmentSH_ID(equipment_id, date, state_id);
-        Optional<EquipmentStateHistory> equipmentStateHistoryModelOptional = equipmentStateHistoryService.findById(compositeKey);
+        Optional<EquipmentStateHistoryDTO> equipmentStateHistoryModelOptional = equipmentStateHistoryService.findById(compositeKey);
         if (!equipmentStateHistoryModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentStateHistory not found.");
         }
@@ -88,13 +87,12 @@ public class EquipmentStateHistoryController {
                                                               @RequestBody @Valid EquipmentStateHistoryDTO equipmentStateHistoryDTO) {
         LocalDateTime date = LocalDateTime.parse(customDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         var compositeKey = new EquipmentStateHistory.EquipmentSH_ID(equipment_id, date, state_id);
-        Optional<EquipmentStateHistory> equipmentStateHistoryModelOptional = equipmentStateHistoryService.findById(compositeKey);
+        Optional<EquipmentStateHistoryDTO> equipmentStateHistoryModelOptional = equipmentStateHistoryService.findById(compositeKey);
         if (!equipmentStateHistoryModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentStateHistory not found.");
         }
-        var equipment = new EquipmentStateHistory(equipmentStateHistoryDTO);
         equipmentStateHistoryService.delete(equipmentStateHistoryModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Modified.\n" + equipmentStateHistoryService.save(equipment));
+        return ResponseEntity.status(HttpStatus.OK).body("Modified.\n" + equipmentStateHistoryService.save(equipmentStateHistoryDTO));
     }
 
 }

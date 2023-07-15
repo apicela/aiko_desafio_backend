@@ -11,6 +11,7 @@
         height:100%;
         width:100%;}
 
+
     </style>
     <!-- Adiciona a chave da API do Google Maps -->
 
@@ -20,6 +21,7 @@
     var positions = /*[[${positionsHistoryJson}]]*/ '[]';
      // Parse the JSON string and create a marker for each position
      var positionsArray = JSON.parse(positions);
+
 
     </script>
 
@@ -63,11 +65,13 @@
 
     }
 
+
     </script>
 
 
     <script async
-            defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD43jBxZbPDo3x_yjGGrHPiyJ5XCgmonl4&callback=initMap"></script>
+            defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD43jBxZbPDo3x_yjGGrHPiyJ5XCgmonl4&callback=initMap"></script>
 
 </head>
 <body onload="initMap()">

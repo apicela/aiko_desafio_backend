@@ -1,8 +1,11 @@
 package apirest.aiko.services;
 
+import apirest.aiko.dtos.EquipmentModelDTO;
+import apirest.aiko.mappers.EquipmentModelMapper;
 import apirest.aiko.models.EquipmentModel;
 import apirest.aiko.repositories.EquipmentModelRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,28 +14,31 @@ import java.util.UUID;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class EquipmentModelService {
     final EquipmentModelRepository equipmentModelRepository;
+    final EquipmentModelMapper mapper;
 
-    public EquipmentModelService(EquipmentModelRepository equipmentModelRepository) {
-        this.equipmentModelRepository = equipmentModelRepository;
+    public List<EquipmentModelDTO> findAll() {
+        List<EquipmentModel> list = equipmentModelRepository.findAll();
+        return mapper.mapEntityListToDtoList(list);
     }
 
-
-    public List<EquipmentModel> findAll() {
-        return equipmentModelRepository.findAll();
+    public EquipmentModel save(EquipmentModelDTO dto) {
+        return equipmentModelRepository.save(mapper.mapDtoToEntity(dto));
     }
 
-    public EquipmentModel save(EquipmentModel equipmentModel) {
-        return equipmentModelRepository.save(equipmentModel);
-    }
-
-    public Optional<EquipmentModel> findById(UUID id) {
-        return equipmentModelRepository.findById(id);
+    public Optional<EquipmentModelDTO> findById(UUID id) {
+        Optional<EquipmentModel> optional = equipmentModelRepository.findById(id);
+        if (optional.isPresent()) {
+            var equipment = optional.get();
+            return Optional.of(mapper.mapEntityToDto(equipment));
+        }
+        return Optional.empty();
     }
 
     @Transactional
-    public void delete(EquipmentModel equipmentModel) {
-        equipmentModelRepository.delete(equipmentModel);
+    public void delete(EquipmentModelDTO equipmentModel) {
+        equipmentModelRepository.delete(mapper.mapDtoToEntity(equipmentModel));
     }
 }

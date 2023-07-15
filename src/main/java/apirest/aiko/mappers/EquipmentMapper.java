@@ -3,8 +3,11 @@ package apirest.aiko.mappers;
 import apirest.aiko.dtos.EquipmentDTO;
 import apirest.aiko.models.Equipment;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -14,4 +17,15 @@ public class EquipmentMapper {
     public Equipment mapDtoToEntity(EquipmentDTO equipmentDTO) {
         return mapper.map(equipmentDTO, Equipment.class);
     }
+
+    public EquipmentDTO mapEntityToDto(Equipment equipment) {
+        return mapper.map(equipment, EquipmentDTO.class);
+    }
+
+    public List<EquipmentDTO> mapEntityListToDtoList(List<Equipment> equipmentList) {
+        return equipmentList.stream()
+                .map(this::mapEntityToDto)
+                .collect(Collectors.toList());
+    }
+
 }

@@ -43,6 +43,7 @@ public class EquipmentModel implements Serializable {
     public List<Equipment> getEquipments() {
         return equipments;
     }
+
     @Override
     public String toString() {
         return "Equipment Model:\n" +

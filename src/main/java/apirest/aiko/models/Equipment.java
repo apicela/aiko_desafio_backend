@@ -63,6 +63,7 @@ public class Equipment implements Serializable {
     public List<EquipmentStateHistory> getEquipmentStateHistories() {
         return equipmentStateHistories;
     }
+
     @Override
     public String toString() {
         return "Equipment:\n" +

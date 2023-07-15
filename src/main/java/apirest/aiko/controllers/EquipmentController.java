@@ -1,12 +1,10 @@
 package apirest.aiko.controllers;
 
 import apirest.aiko.dtos.EquipmentDTO;
-import apirest.aiko.models.Equipment;
 import apirest.aiko.services.EquipmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,14 +33,14 @@ public class EquipmentController {
 
     @GetMapping
     @Operation(summary = "Get all objects", description = "Here, you can get a list of objects")
-    public ResponseEntity<List<Equipment>> getAllEquipment() {
+    public ResponseEntity<List<EquipmentDTO>> getAllEquipment() {
         return ResponseEntity.status(HttpStatus.OK).body(equipmentService.findAll());
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Find object by Id", description = "Here, you can get a specific object filtering by your ID")
     public ResponseEntity<Object> getOneEquipment(@PathVariable(value = "id") UUID id) {
-        Optional<Equipment> equipmentModelOptional = equipmentService.findById(id);
+        Optional<EquipmentDTO> equipmentModelOptional = equipmentService.findById(id);
         if (!equipmentModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Equipment not found.");
         }
@@ -52,7 +50,7 @@ public class EquipmentController {
     @DeleteMapping("/{id}")
     @Operation(summary = "DELETE", description = "Here, you can delete a specific object by your ID")
     public ResponseEntity<Object> deleteEquipment(@PathVariable(value = "id") UUID id) {
-        Optional<Equipment> equipmentModelOptional = equipmentService.findById(id);
+        Optional<EquipmentDTO> equipmentModelOptional = equipmentService.findById(id);
         if (!equipmentModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Equipment not found.");
         }
@@ -64,7 +62,7 @@ public class EquipmentController {
     @Operation(summary = "EDIT", description = "Here,\n you can edit \r\ninfos about an specific ID")
     public ResponseEntity<Object> updateEquipment(@PathVariable(value = "id") UUID id,
                                                   @RequestBody @Valid EquipmentDTO equipmentDto) {
-        Optional<Equipment> equipmentModelOptional = equipmentService.findById(id);
+        Optional<EquipmentDTO> equipmentModelOptional = equipmentService.findById(id);
         if (!equipmentModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Equipment not found.");
         }

@@ -1,12 +1,13 @@
 package apirest.aiko.mappers;
 
-import apirest.aiko.dtos.EquipmentModelStateHourlyEarningsDTO;
 import apirest.aiko.dtos.EquipmentPositionHistoryDTO;
-import apirest.aiko.models.EquipmentModelStateHourlyEarnings;
 import apirest.aiko.models.EquipmentPositionHistory;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -15,5 +16,15 @@ public class EquipmentPositionHistoryMapper {
 
     public EquipmentPositionHistory mapDtoToEntity(EquipmentPositionHistoryDTO dto) {
         return mapper.map(dto, EquipmentPositionHistory.class);
+    }
+
+    public EquipmentPositionHistoryDTO mapEntityToDto(EquipmentPositionHistory equipment) {
+        return mapper.map(equipment, EquipmentPositionHistoryDTO.class);
+    }
+
+    public List<EquipmentPositionHistoryDTO> mapEntityListToDtoList(List<EquipmentPositionHistory> equipmentList) {
+        return equipmentList.stream()
+                .map(this::mapEntityToDto)
+                .collect(Collectors.toList());
     }
 }

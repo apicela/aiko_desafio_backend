@@ -32,13 +32,12 @@ public class EquipmentPositionHistoryController {
     @PostMapping
     @Operation(summary = "CREATE", description = "Here, you can create a new object for your entity")
     public ResponseEntity<Object> saveEquipmentPositionHistory(@RequestBody @Valid EquipmentPositionHistoryDTO equipmentPositionHistoryDTO) {
-        var equipmentPositionHistoryModel = new EquipmentPositionHistory(equipmentPositionHistoryDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Created successfully." + equipmentPositionHistoryService.save(equipmentPositionHistoryModel));
+        return ResponseEntity.status(HttpStatus.CREATED).body("Created successfully." + equipmentPositionHistoryService.save(equipmentPositionHistoryDTO));
     }
 
     @GetMapping
     @Operation(summary = "Get all objects", description = "Here, you can get a list of objects")
-    public ResponseEntity<List<EquipmentPositionHistory>> getAllEquipmentPositionHistory() {
+    public ResponseEntity<List<EquipmentPositionHistoryDTO>> getAllEquipmentPositionHistory() {
         return ResponseEntity.status(HttpStatus.OK).body(equipmentPositionHistoryService.findAll());
     }
 
@@ -48,7 +47,7 @@ public class EquipmentPositionHistoryController {
             @PathVariable(value = "equipment_id") UUID equipment_id,
             @PathVariable(value = "date") LocalDateTime date) {
         EquipmentPositionHistory.EquipmentPositionHistoryPK compositeKey = new EquipmentPositionHistory.EquipmentPositionHistoryPK(equipment_id, date);
-        Optional<EquipmentPositionHistory> equipmentPositionHistoryModelOptional = equipmentPositionHistoryService.findById(compositeKey);
+        Optional<EquipmentPositionHistoryDTO> equipmentPositionHistoryModelOptional = equipmentPositionHistoryService.findById(compositeKey);
         if (!equipmentPositionHistoryModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentPositionHistory not found.");
         }
@@ -61,7 +60,7 @@ public class EquipmentPositionHistoryController {
             @PathVariable(value = "equipment_id") UUID equipment_id,
             @PathVariable(value = "date") LocalDateTime date) {
         EquipmentPositionHistory.EquipmentPositionHistoryPK compositeKey = new EquipmentPositionHistory.EquipmentPositionHistoryPK(equipment_id, date);
-        Optional<EquipmentPositionHistory> equipmentPositionHistoryModelOptional = equipmentPositionHistoryService.findById(compositeKey);
+        Optional<EquipmentPositionHistoryDTO> equipmentPositionHistoryModelOptional = equipmentPositionHistoryService.findById(compositeKey);
         if (!equipmentPositionHistoryModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentPositionHistory not found.");
         }
@@ -77,13 +76,12 @@ public class EquipmentPositionHistoryController {
             @RequestBody @Valid EquipmentPositionHistoryDTO equipmentPositionHistoryDto) {
         LocalDateTime date = LocalDateTime.parse(customDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         var compositeKey = new EquipmentPositionHistory.EquipmentPositionHistoryPK(equipment_id, date);
-        Optional<EquipmentPositionHistory> equipmentPositionHistoryModelOptional = equipmentPositionHistoryService.findById(compositeKey);
+        Optional<EquipmentPositionHistoryDTO> equipmentPositionHistoryModelOptional = equipmentPositionHistoryService.findById(compositeKey);
         if (!equipmentPositionHistoryModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentPositionHistory not found.");
         }
-        var equipment = new EquipmentPositionHistory(equipmentPositionHistoryDto);
         equipmentPositionHistoryService.delete(equipmentPositionHistoryModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Modified.\n" + equipmentPositionHistoryService.save(equipment));
+        return ResponseEntity.status(HttpStatus.OK).body("Modified.\n" + equipmentPositionHistoryService.save(equipmentPositionHistoryDto));
     }
 
 }

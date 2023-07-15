@@ -43,7 +43,6 @@ public class EquipmentModelStateHourlyEarnings implements Serializable {
     private EquipmentState equipmentState;
 
 
-
     public EquipmentModelStateHourlyEarnings(EquipmentModelStateHourlyEarningsDTO equipmentModelStateHourlyEarningsDTO) {
         equipmentMSHE_id = new EquipmentMSHE_ID(equipmentModelStateHourlyEarningsDTO.getEquipment_model_id(), equipmentModelStateHourlyEarningsDTO.getEquipment_state_id());
         equipmentModel = new EquipmentModel();

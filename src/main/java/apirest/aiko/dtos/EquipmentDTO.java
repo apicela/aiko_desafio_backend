@@ -1,12 +1,12 @@
 package apirest.aiko.dtos;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
+
 @Data // getters and setters
 @NoArgsConstructor
 public class EquipmentDTO {

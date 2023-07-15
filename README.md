@@ -247,7 +247,7 @@ persistir os dados, preservando-os mesmo após as reiniciações do container, f
    ``` docker exec -i dbAPP pg_restore -U postgres -d jamilzin1_db_apirest_test < data.sql ```
 5. Acesse http://localhost:8080/main
    <br>
-   
+
 https://github.com/jamilzin1/API_Rest_de_CRUD_SpringBoot/assets/105384228/d32b7a27-c459-424e-a122-35fc14305912
 
 **Fim!**
@@ -255,7 +255,6 @@ https://github.com/jamilzin1/API_Rest_de_CRUD_SpringBoot/assets/105384228/d32b7a
 Você está pronto para desfrutar da aplicação :)
 
 ## ▶️ Testes da aplicação
-
 
 https://github.com/jamilzin1/API_Rest_de_CRUD_SpringBoot/assets/105384228/10868b88-cc1a-42e2-9d82-15cc73486b14
 

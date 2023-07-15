@@ -30,14 +30,13 @@ public class EquipmentModelStateHourlyEarningsController {
     @PostMapping
     @Operation(summary = "CREATE", description = "Here, you can create a new object for your entity")
     public ResponseEntity<Object> saveEquipmentModelStateHourlyEarnings(@RequestBody @Valid EquipmentModelStateHourlyEarningsDTO equipmentModelStateHourlyEarningsDTO) {
-        var equipmentModelStateHourlyEarningsModel = new EquipmentModelStateHourlyEarnings(equipmentModelStateHourlyEarningsDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Created successfully." + equipmentModelStateHourlyEarningsService.save(equipmentModelStateHourlyEarningsModel));
+        return ResponseEntity.status(HttpStatus.CREATED).body("Created successfully." + equipmentModelStateHourlyEarningsService.save(equipmentModelStateHourlyEarningsDTO));
 
     }
 
     @GetMapping
     @Operation(summary = "Get all objects", description = "Here, you can get a list of objects")
-    public ResponseEntity<List<EquipmentModelStateHourlyEarnings>> getAllEquipmentModelStateHourlyEarnings() {
+    public ResponseEntity<List<EquipmentModelStateHourlyEarningsDTO>> getAllEquipmentModelStateHourlyEarnings() {
         return ResponseEntity.status(HttpStatus.OK).body(equipmentModelStateHourlyEarningsService.findAll());
     }
 
@@ -47,7 +46,7 @@ public class EquipmentModelStateHourlyEarningsController {
             @PathVariable(value = "model_ID") UUID model_ID,
             @PathVariable(value = "state_ID") UUID state_ID) {
         var compositeKey = new EquipmentModelStateHourlyEarnings.EquipmentMSHE_ID(model_ID, state_ID);
-        Optional<EquipmentModelStateHourlyEarnings> equipmentModelStateHourlyEarningsModelOptional = equipmentModelStateHourlyEarningsService.findById(compositeKey);
+        Optional<EquipmentModelStateHourlyEarningsDTO> equipmentModelStateHourlyEarningsModelOptional = equipmentModelStateHourlyEarningsService.findById(compositeKey);
         if (!equipmentModelStateHourlyEarningsModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentModelStateHourlyEarnings not found.");
         }
@@ -58,9 +57,9 @@ public class EquipmentModelStateHourlyEarningsController {
     @Operation(summary = "DELETE", description = "Here, you can delete a specific object by your ID")
     public ResponseEntity<Object> deleteEquipmentModelStateHourlyEarnings(
             @PathVariable(value = "model_ID") UUID model_ID,
-            @PathVariable(value = "state_ID") UUID state_ID){
+            @PathVariable(value = "state_ID") UUID state_ID) {
         var compositeKey = new EquipmentModelStateHourlyEarnings.EquipmentMSHE_ID(model_ID, state_ID);
-        Optional<EquipmentModelStateHourlyEarnings> equipmentModelStateHourlyEarningsModelOptional = equipmentModelStateHourlyEarningsService.findById(compositeKey);
+        Optional<EquipmentModelStateHourlyEarningsDTO> equipmentModelStateHourlyEarningsModelOptional = equipmentModelStateHourlyEarningsService.findById(compositeKey);
         if (!equipmentModelStateHourlyEarningsModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentModelStateHourlyEarnings not found.");
         }
@@ -73,13 +72,12 @@ public class EquipmentModelStateHourlyEarningsController {
     public ResponseEntity<Object> updateEquipmentModelStateHourlyEarnings(
             @PathVariable(value = "model_ID") UUID model_ID,
             @PathVariable(value = "state_ID") UUID state_ID,
-            @RequestBody  @Valid EquipmentModelStateHourlyEarningsDTO equipmentModelStateHourlyEarningsDto) {
+            @RequestBody @Valid EquipmentModelStateHourlyEarningsDTO equipmentModelStateHourlyEarningsDto) {
         var compositeKey = new EquipmentModelStateHourlyEarnings.EquipmentMSHE_ID(model_ID, state_ID);
-        Optional<EquipmentModelStateHourlyEarnings> equipmentModelStateHourlyEarningsModelOptional = equipmentModelStateHourlyEarningsService.findById(compositeKey);
+        Optional<EquipmentModelStateHourlyEarningsDTO> equipmentModelStateHourlyEarningsModelOptional = equipmentModelStateHourlyEarningsService.findById(compositeKey);
         if (!equipmentModelStateHourlyEarningsModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentModelStateHourlyEarnings not found.");
         }
-        var equipmentModelStateHourlyEarningsModel = new EquipmentModelStateHourlyEarnings(equipmentModelStateHourlyEarningsDto);
-        return ResponseEntity.status(HttpStatus.OK).body("Modified.\n" + equipmentModelStateHourlyEarningsService.save(equipmentModelStateHourlyEarningsModel));
+        return ResponseEntity.status(HttpStatus.OK).body("Modified.\n" + equipmentModelStateHourlyEarningsService.save(equipmentModelStateHourlyEarningsDto));
     }
 }

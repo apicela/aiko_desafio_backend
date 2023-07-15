@@ -36,6 +36,11 @@ public class EquipmentPositionHistory implements Serializable {
 
     private double lat;
     private double lon;
+    @Column(name = "date", nullable = false, insertable = false, updatable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
+    @Schema(type = "string", pattern = "yyyy-MM-dd HH:mm:ss", example = "2001-12-25 17:15:22")
+    private LocalDateTime date;
+
 
     public EquipmentPositionHistory(EquipmentPositionHistoryDTO equipmentPositionHistoryDTO) {
         this.equipment = new Equipment();
@@ -45,21 +50,16 @@ public class EquipmentPositionHistory implements Serializable {
         this.lon = equipmentPositionHistoryDTO.getLon();
     }
 
-
     @JsonIgnore
     public Equipment getEquipment() {
         return equipment;
     }
 
-    @Column(name = "date", nullable = false, insertable = false, updatable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
-    @Schema(type = "string", pattern = "yyyy-MM-dd HH:mm:ss", example = "2001-12-25 17:15:22")
-    private LocalDateTime date;
-
     @JsonIgnore
     public EquipmentPositionHistoryPK getEquipmentPositionHistoryPK() {
         return equipmentPositionHistoryPK;
     }
+
     @Override
     public String toString() {
         return "Equipment Position History:" +
@@ -72,17 +72,16 @@ public class EquipmentPositionHistory implements Serializable {
     @Data
     @NoArgsConstructor
     public static class EquipmentPositionHistoryPK implements Serializable {
-        public EquipmentPositionHistoryPK(UUID equipment_id, LocalDateTime date)
-        {
-            this.equipment_id=equipment_id;
-            this.date=date;
-        }
         @Column(name = "equipment_id", nullable = false)
         private UUID equipment_id;
-
         @Column(name = "date", nullable = false)
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
         private LocalDateTime date;
+
+        public EquipmentPositionHistoryPK(UUID equipment_id, LocalDateTime date) {
+            this.equipment_id = equipment_id;
+            this.date = date;
+        }
 
     }
 }

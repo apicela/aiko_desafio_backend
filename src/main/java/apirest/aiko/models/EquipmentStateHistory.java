@@ -72,6 +72,7 @@ public class EquipmentStateHistory implements Serializable {
     public EquipmentState getEquipmentState() {
         return equipmentState;
     }
+
     @Override
     public String toString() {
         return "Equipment State History" +

@@ -1,8 +1,11 @@
 package apirest.aiko.services;
 
+import apirest.aiko.dtos.EquipmentStateHistoryDTO;
+import apirest.aiko.mappers.EquipmentStateHistoryMapper;
 import apirest.aiko.models.EquipmentStateHistory;
 import apirest.aiko.repositories.EquipmentStateHistoryRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,19 +13,19 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class EquipmentStateHistoryService {
     final EquipmentStateHistoryRepository equipmentStateHistoryRepository;
+    final EquipmentStateHistoryMapper mapper;
 
-    public EquipmentStateHistoryService(EquipmentStateHistoryRepository equipmentStateHistoryRepository) {
-        this.equipmentStateHistoryRepository = equipmentStateHistoryRepository;
+    public List<EquipmentStateHistoryDTO> findAll() {
+        List<EquipmentStateHistory> list = equipmentStateHistoryRepository.findAll();
+        return mapper.mapEntityListToDtoList(list);
     }
 
-    public List<EquipmentStateHistory> findAll() {
-        return equipmentStateHistoryRepository.findAll();
-    }
-
-    public List<EquipmentStateHistory> findLastState() {
-        return equipmentStateHistoryRepository.findLastState();
+    public List<EquipmentStateHistoryDTO> findLastState() {
+        List<EquipmentStateHistory> list = equipmentStateHistoryRepository.findLastState();
+        return mapper.mapEntityListToDtoList(list);
     }
 
     public String findState(UUID equipment_id) {
@@ -30,16 +33,21 @@ public class EquipmentStateHistoryService {
     }
 
     @Transactional
-    public EquipmentStateHistory save(EquipmentStateHistory equipmentStateHistory) {
-        return equipmentStateHistoryRepository.save(equipmentStateHistory);
+    public EquipmentStateHistory save(EquipmentStateHistoryDTO dto) {
+        return equipmentStateHistoryRepository.save(mapper.mapDtoToEntity(dto));
     }
 
-    public Optional<EquipmentStateHistory> findById(EquipmentStateHistory.EquipmentSH_ID id) {
-        return equipmentStateHistoryRepository.findById(id);
+    public Optional<EquipmentStateHistoryDTO> findById(EquipmentStateHistory.EquipmentSH_ID id) {
+        Optional<EquipmentStateHistory> optional = equipmentStateHistoryRepository.findById(id);
+        if (optional.isPresent()) {
+            var equipment = optional.get();
+            return Optional.of(mapper.mapEntityToDto(equipment));
+        }
+        return Optional.empty();
     }
 
     @Transactional
-    public void delete(EquipmentStateHistory equipmentStateHistory) {
-        equipmentStateHistoryRepository.delete(equipmentStateHistory);
+    public void delete(EquipmentStateHistoryDTO equipmentStateHistory) {
+        equipmentStateHistoryRepository.delete(mapper.mapDtoToEntity(equipmentStateHistory));
     }
 }

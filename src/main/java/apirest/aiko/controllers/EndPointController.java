@@ -1,7 +1,7 @@
 package apirest.aiko.controllers;
 
+import apirest.aiko.dtos.EquipmentStateHistoryDTO;
 import apirest.aiko.models.EquipmentPositionHistory;
-import apirest.aiko.models.EquipmentStateHistory;
 import apirest.aiko.services.EquipmentPositionHistoryService;
 import apirest.aiko.services.EquipmentStateHistoryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,7 +31,7 @@ public class EndPointController {
 
     @GetMapping("/state")
     @Operation(summary = "Get all", description = "Get last states of your Equipments")
-    public ResponseEntity<List<EquipmentStateHistory>> listResponseEntity() {
+    public ResponseEntity<List<EquipmentStateHistoryDTO>> listResponseEntity() {
         return ResponseEntity.status(HttpStatus.OK).body(equipmentStateHistoryService.findLastState());
     }
 

@@ -18,12 +18,9 @@ public class EquipmentService {
     final EquipmentRepository equipmentRepository;
     final EquipmentMapper mapper;
 
-//    public EquipmentService(EquipmentRepository equipmentRepository) {
-//        this.equipmentRepository = equipmentRepository;
-//    }
-
-    public List<Equipment> findAll() {
-        return equipmentRepository.findAll();
+    public List<EquipmentDTO> findAll() {
+        List<Equipment> list = equipmentRepository.findAll();
+        return mapper.mapEntityListToDtoList(list);
     }
 
     @Transactional
@@ -31,13 +28,17 @@ public class EquipmentService {
         return equipmentRepository.save(mapper.mapDtoToEntity(equipment));
     }
 
-    public Optional<Equipment> findById(UUID id) {
-
-        return equipmentRepository.findById(id);
+    public Optional<EquipmentDTO> findById(UUID id) {
+        Optional<Equipment> equipmentOptional = equipmentRepository.findById(id);
+        if (equipmentOptional.isPresent()) {
+            var equipment = equipmentOptional.get();
+            return Optional.of(mapper.mapEntityToDto(equipment));
+        }
+        return Optional.empty();
     }
 
     @Transactional
-    public void delete(Equipment equipment) {
-        equipmentRepository.delete(equipment);
+    public void delete(EquipmentDTO equipment) {
+        equipmentRepository.delete(mapper.mapDtoToEntity(equipment));
     }
 }
