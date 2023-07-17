@@ -1,10 +1,15 @@
 package apirest.aiko.controllers;
 
 import apirest.aiko.dtos.EquipmentModelDTO;
+import apirest.aiko.mappers.EquipmentModelMapper;
+import apirest.aiko.models.EquipmentModel;
 import apirest.aiko.services.EquipmentModelService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,22 +21,21 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/equipment_model")
 @CrossOrigin("*")
+@AllArgsConstructor
 @Tag(name = "2. Equipment Model", description = "CRUD")
 
 public class EquipmentModelController {
     public static final String ENDPOINT = "/equipment_model";
 
     final EquipmentModelService equipmentModelService;
-
-    public EquipmentModelController(EquipmentModelService equipmentModelService) {
-        this.equipmentModelService = equipmentModelService;
-    }
+    final EquipmentModelMapper mapper;
 
 
     @PostMapping
     @Operation(summary = "CREATE", description = "Here, you can create a new object for your entity")
     public ResponseEntity<Object> saveEquipmentModel(@RequestBody @Valid EquipmentModelDTO equipmentModelDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body("Created successfully." + equipmentModelService.save(equipmentModelDTO));
+        var equip = mapper.mapDtoToEntity(equipmentModelDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Created successfully." + equipmentModelService.save(equip));
     }
 
     @GetMapping
@@ -46,7 +50,7 @@ public class EquipmentModelController {
         if (id == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
         }
-        Optional<EquipmentModelDTO> equipmentModelModelOptional = equipmentModelService.findById(id);
+        Optional<EquipmentModelDTO> equipmentModelModelOptional = equipmentModelService.findByIdDTO(id);
         if (!equipmentModelModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentModelModel not found.");
         }
@@ -59,7 +63,7 @@ public class EquipmentModelController {
         if (id == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
         }
-        Optional<EquipmentModelDTO> equipmentModelModelOptional = equipmentModelService.findById(id);
+        Optional<EquipmentModel> equipmentModelModelOptional = equipmentModelService.findById(id);
         if (!equipmentModelModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentModelModel not found.");
         }
@@ -70,16 +74,17 @@ public class EquipmentModelController {
     @PutMapping("/{id}")
     @Operation(summary = "EDIT", description = "Here, you can edit infos about an specific ID")
     public ResponseEntity<Object> updateEquipmentModelModel(@PathVariable(value = "id") UUID id,
-                                                            @RequestBody @Valid EquipmentModelDTO equipmentModelDto) {
+                                                            @RequestBody @Valid EquipmentModelDTO dto) {
         if (id == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
         }
-        Optional<EquipmentModelDTO> equipmentModelModelOptional = equipmentModelService.findById(id);
-        if (!equipmentModelModelOptional.isPresent()) {
+        Optional<EquipmentModel> optional = equipmentModelService.findById(id);
+        if (!optional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentModelModel not found.");
         }
-
-        return ResponseEntity.status(HttpStatus.OK).body("Modified.\n" + equipmentModelService.save(equipmentModelDto));
+        var equip = optional.get();
+        equip.setName(dto.getName());
+        return ResponseEntity.status(HttpStatus.OK).body(equipmentModelService.save(equip));
     }
 
 

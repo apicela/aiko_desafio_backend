@@ -21,7 +21,6 @@ public class EquipmentModel implements Serializable {
 
     @Id
     @GeneratedValue
-    @JsonProperty("equipment_model_id")
     private UUID id;
 
     private String name;
