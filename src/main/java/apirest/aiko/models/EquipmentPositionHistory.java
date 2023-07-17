@@ -29,7 +29,7 @@ public class EquipmentPositionHistory implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("equipment_id")
     @JoinColumn(name = "equipment_id", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_equipment"),
+            foreignKey = @ForeignKey(name = "fk_equipment",value = ConstraintMode.NO_CONSTRAINT),
             updatable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Equipment equipment;

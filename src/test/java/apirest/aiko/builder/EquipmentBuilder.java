@@ -25,7 +25,6 @@ public class EquipmentBuilder {
             EquipmentModel model = new EquipmentModel();
             model.setName(faker.pokemon().name());
             model.setId(UUID.randomUUID());
-//            log.info(model.toString());
             return model;
         }
 

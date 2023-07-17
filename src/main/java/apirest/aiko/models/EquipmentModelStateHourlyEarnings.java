@@ -25,11 +25,12 @@ public class EquipmentModelStateHourlyEarnings implements Serializable {
     @EmbeddedId
     private EquipmentMSHE_ID equipmentMSHE_id;
 
+    @Column(name = "\"value\"", nullable = false)
     private double value;
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("equipment_model_id")
     @JoinColumn(name = "equipment_model_id", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_equipment_model"),
+            foreignKey = @ForeignKey(name = "fk_equipment_model",value = ConstraintMode.NO_CONSTRAINT),
             updatable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private EquipmentModel equipmentModel;
@@ -37,7 +38,7 @@ public class EquipmentModelStateHourlyEarnings implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("equipment_state_id")
     @JoinColumn(name = "equipment_state_id", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_equipment_state"),
+            foreignKey = @ForeignKey(name = "fk_equipment_state",value = ConstraintMode.NO_CONSTRAINT),
             updatable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private EquipmentState equipmentState;

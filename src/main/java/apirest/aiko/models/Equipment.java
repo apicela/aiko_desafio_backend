@@ -3,6 +3,8 @@ package apirest.aiko.models;
 import apirest.aiko.dtos.EquipmentDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +27,7 @@ public class Equipment implements Serializable {
     @GeneratedValue
     private UUID id;
 
+    @NotNull
     private String name;
 
     @Column(insertable = false, updatable = false)
@@ -42,10 +45,12 @@ public class Equipment implements Serializable {
     private List<EquipmentStateHistory> equipmentStateHistories;
 
     public Equipment(EquipmentDTO equipmentDTO) {
-        equipmentModel = new EquipmentModel();
+        var equipmentModel = new EquipmentModel();
         equipmentModel.setId(equipmentDTO.getEquipment_model_id());
         this.name = equipmentDTO.getName();
+        this.equipment_model_id = equipmentDTO.getEquipment_model_id();
         this.equipmentModel = equipmentModel;
+
     }
 
 
