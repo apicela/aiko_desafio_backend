@@ -8,8 +8,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,12 +33,12 @@ public class EquipmentModelController {
     @Operation(summary = "CREATE", description = "Here, you can create a new object for your entity")
     public ResponseEntity<Object> saveEquipmentModel(@RequestBody @Valid EquipmentModelDTO equipmentModelDTO) {
         var equip = mapper.mapDtoToEntity(equipmentModelDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Created successfully." + equipmentModelService.save(equip));
+        return ResponseEntity.status(HttpStatus.CREATED).body(equipmentModelService.save(equip));
     }
 
     @GetMapping
     @Operation(summary = "Get all objects", description = "Here, you can get a list of objects")
-    public ResponseEntity<List<EquipmentModelDTO>> getAllEquipmentModel() {
+    public ResponseEntity<List<EquipmentModel>> getAllEquipmentModel() {
         return ResponseEntity.status(HttpStatus.OK).body(equipmentModelService.findAll());
     }
 
@@ -50,7 +48,7 @@ public class EquipmentModelController {
         if (id == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
         }
-        Optional<EquipmentModelDTO> equipmentModelModelOptional = equipmentModelService.findByIdDTO(id);
+        Optional<EquipmentModel> equipmentModelModelOptional = equipmentModelService.findById(id);
         if (!equipmentModelModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentModelModel not found.");
         }

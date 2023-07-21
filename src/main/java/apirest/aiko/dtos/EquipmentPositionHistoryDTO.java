@@ -23,6 +23,7 @@ public class EquipmentPositionHistoryDTO {
     private double lat;
     @NotNull
     private double lon;
+
     public EquipmentPositionHistoryDTO(EquipmentPositionHistory.EquipmentPositionHistoryPK equipmentPositionHistoryPK,
                                        double lat, double lon) {
         this.equipment_id = equipmentPositionHistoryPK.getEquipment_id();

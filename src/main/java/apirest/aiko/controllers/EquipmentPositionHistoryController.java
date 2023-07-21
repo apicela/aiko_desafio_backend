@@ -1,11 +1,14 @@
 package apirest.aiko.controllers;
 
 import apirest.aiko.dtos.EquipmentPositionHistoryDTO;
+import apirest.aiko.mappers.EquipmentPositionHistoryMapper;
 import apirest.aiko.models.EquipmentPositionHistory;
 import apirest.aiko.services.EquipmentPositionHistoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,27 +22,24 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/equipment_position_history")
 @CrossOrigin("*")
+@AllArgsConstructor
 @Tag(name = "7. Equipment Position History", description = "CRUD")
-
 public class EquipmentPositionHistoryController {
     public static final String ENDPOINT = "/equipment_position_history";
 
     final EquipmentPositionHistoryService equipmentPositionHistoryService;
-
-    public EquipmentPositionHistoryController(EquipmentPositionHistoryService equipmentPositionHistoryService) {
-        this.equipmentPositionHistoryService = equipmentPositionHistoryService;
-    }
-
+    final EquipmentPositionHistoryMapper mapper;
 
     @PostMapping
     @Operation(summary = "CREATE", description = "Here, you can create a new object for your entity")
     public ResponseEntity<Object> saveEquipmentPositionHistory(@RequestBody @Valid EquipmentPositionHistoryDTO equipmentPositionHistoryDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body("Created successfully." + equipmentPositionHistoryService.save(equipmentPositionHistoryDTO));
+        var equip = new EquipmentPositionHistory(equipmentPositionHistoryDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(equipmentPositionHistoryService.save(equip));
     }
 
     @GetMapping
     @Operation(summary = "Get all objects", description = "Here, you can get a list of objects")
-    public ResponseEntity<List<EquipmentPositionHistoryDTO>> getAllEquipmentPositionHistory() {
+    public ResponseEntity<List<EquipmentPositionHistory>> getAllEquipmentPositionHistory() {
         return ResponseEntity.status(HttpStatus.OK).body(equipmentPositionHistoryService.findAll());
     }
 
@@ -52,7 +52,7 @@ public class EquipmentPositionHistoryController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
         }
         EquipmentPositionHistory.EquipmentPositionHistoryPK compositeKey = new EquipmentPositionHistory.EquipmentPositionHistoryPK(equipment_id, date);
-        Optional<EquipmentPositionHistoryDTO> equipmentPositionHistoryModelOptional = equipmentPositionHistoryService.findById(compositeKey);
+        Optional<EquipmentPositionHistory> equipmentPositionHistoryModelOptional = equipmentPositionHistoryService.findById(compositeKey);
         if (!equipmentPositionHistoryModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentPositionHistory not found.");
         }
@@ -68,7 +68,7 @@ public class EquipmentPositionHistoryController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
         }
         EquipmentPositionHistory.EquipmentPositionHistoryPK compositeKey = new EquipmentPositionHistory.EquipmentPositionHistoryPK(equipment_id, date);
-        Optional<EquipmentPositionHistoryDTO> equipmentPositionHistoryModelOptional = equipmentPositionHistoryService.findById(compositeKey);
+        Optional<EquipmentPositionHistory> equipmentPositionHistoryModelOptional = equipmentPositionHistoryService.findById(compositeKey);
         if (!equipmentPositionHistoryModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentPositionHistory not found.");
         }
@@ -87,12 +87,13 @@ public class EquipmentPositionHistoryController {
         }
         LocalDateTime date = LocalDateTime.parse(customDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         var compositeKey = new EquipmentPositionHistory.EquipmentPositionHistoryPK(equipment_id, date);
-        Optional<EquipmentPositionHistoryDTO> equipmentPositionHistoryModelOptional = equipmentPositionHistoryService.findById(compositeKey);
-        if (!equipmentPositionHistoryModelOptional.isPresent()) {
+        Optional<EquipmentPositionHistory> optional = equipmentPositionHistoryService.findById(compositeKey);
+        if (!optional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentPositionHistory not found.");
         }
-        equipmentPositionHistoryService.delete(equipmentPositionHistoryModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Modified.\n" + equipmentPositionHistoryService.save(equipmentPositionHistoryDto));
+        var equip = optional.get();
+        BeanUtils.copyProperties(equipmentPositionHistoryDto, equip);
+        return ResponseEntity.status(HttpStatus.OK).body(equipmentPositionHistoryService.save(equip));
     }
 
 }

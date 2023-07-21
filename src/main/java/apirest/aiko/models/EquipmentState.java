@@ -1,8 +1,8 @@
 package apirest.aiko.models;
 
-import apirest.aiko.dtos.EquipmentStateDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +13,7 @@ import java.util.UUID;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "equipment_state", schema = "operation")
 public class EquipmentState implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -28,12 +29,6 @@ public class EquipmentState implements Serializable {
 
     private String color;
     private String name;
-
-
-    public EquipmentState(EquipmentStateDTO equipmentStateDTO) {
-        this.name = equipmentStateDTO.getName();
-        this.color = equipmentStateDTO.getColor();
-    }
 
     @JsonIgnore
     public List<EquipmentModelStateHourlyEarnings> getEquipmentModelStateHourlyEarnings() {

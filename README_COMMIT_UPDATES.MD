@@ -25,4 +25,11 @@
 <br>- Mock teste de Equipment </i>
 <br><br>
 
+<b> • Service tests + HTTP request mock tests<br><br></b>
+<i> - Testes dos componentes Service
+<br>- Testes de chamadas HTTP para respostas 201,200,400,404</i>
+<br><br>
+
+
+
 

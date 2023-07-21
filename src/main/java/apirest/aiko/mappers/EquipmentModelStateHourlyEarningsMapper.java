@@ -18,6 +18,7 @@ public class EquipmentModelStateHourlyEarningsMapper {
         return mapper.map(dto, EquipmentModelStateHourlyEarnings.class);
     }
 
+
     public EquipmentModelStateHourlyEarningsDTO mapEntityToDto(EquipmentModelStateHourlyEarnings equipment) {
         return mapper.map(equipment, EquipmentModelStateHourlyEarningsDTO.class);
     }

@@ -1,6 +1,5 @@
 package apirest.aiko.services;
 
-import apirest.aiko.dtos.EquipmentPositionHistoryDTO;
 import apirest.aiko.mappers.EquipmentPositionHistoryMapper;
 import apirest.aiko.models.EquipmentPositionHistory;
 import apirest.aiko.repositories.EquipmentPositionHistoryRepository;
@@ -25,9 +24,8 @@ public class EquipmentPositionHistoryService {
     }
 
 
-    public List<EquipmentPositionHistoryDTO> findAll() {
-        List<EquipmentPositionHistory> list = equipmentPositionHistoryRepository.findLastPosition();
-        return mapper.mapEntityListToDtoList(list);
+    public List<EquipmentPositionHistory> findAll() {
+        return equipmentPositionHistoryRepository.findLastPosition();
     }
 
     @Transactional
@@ -36,20 +34,20 @@ public class EquipmentPositionHistoryService {
             @ApiResponse(responseCode = "400", description = "Bad Request - requisição mal feita.", content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.", content = {@Content(mediaType = "application/json")})
     })
-    public EquipmentPositionHistory save(EquipmentPositionHistoryDTO dto) {
-        return equipmentPositionHistoryRepository.save(mapper.mapDtoToEntity(dto));
+    public EquipmentPositionHistory save(EquipmentPositionHistory equipmentPositionHistory) {
+        return equipmentPositionHistoryRepository.save(equipmentPositionHistory);
     }
+
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK - requisição bem sucedida e com retorno.", content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "400", description = "Bad Request - requisição mal feita.", content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", description = "Not Found - recurso não encontrado no banco de dados.", content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.", content = {@Content(mediaType = "application/json")})
     })
-    public Optional<EquipmentPositionHistoryDTO> findById(EquipmentPositionHistory.EquipmentPositionHistoryPK id) {
+    public Optional<EquipmentPositionHistory> findById(EquipmentPositionHistory.EquipmentPositionHistoryPK id) {
         Optional<EquipmentPositionHistory> optional = equipmentPositionHistoryRepository.findById(id);
         if (optional.isPresent()) {
-            EquipmentPositionHistory equipment = optional.get();
-            return Optional.of(mapper.mapEntityToDto(equipment));
+            return Optional.of(optional.get());
         }
         return Optional.empty();
     }
@@ -61,7 +59,7 @@ public class EquipmentPositionHistoryService {
             @ApiResponse(responseCode = "404", description = "Not Found - recurso não encontrado no banco de dados.", content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.", content = {@Content(mediaType = "application/json")})
     })
-    public void delete(EquipmentPositionHistoryDTO dto) {
-        equipmentPositionHistoryRepository.delete(mapper.mapDtoToEntity(dto));
+    public void delete(EquipmentPositionHistory equip) {
+        equipmentPositionHistoryRepository.delete(equip);
     }
 }

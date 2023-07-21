@@ -1,7 +1,5 @@
 package apirest.aiko.services;
 
-import apirest.aiko.dtos.EquipmentModelStateHourlyEarningsDTO;
-import apirest.aiko.mappers.EquipmentModelStateHourlyEarningsMapper;
 import apirest.aiko.models.EquipmentModelStateHourlyEarnings;
 import apirest.aiko.repositories.EquipmentModelStateHourlyEarningsRepository;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,11 +16,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class EquipmentModelStateHourlyEarningsService {
     final EquipmentModelStateHourlyEarningsRepository equipmentModelStateHourlyEarningsRepository;
-    final EquipmentModelStateHourlyEarningsMapper mapper;
 
-    public List<EquipmentModelStateHourlyEarningsDTO> findAll() {
-        List<EquipmentModelStateHourlyEarnings> list = equipmentModelStateHourlyEarningsRepository.findAll();
-        return mapper.mapEntityListToDtoList(list);
+    public List<EquipmentModelStateHourlyEarnings> findAll() {
+        return equipmentModelStateHourlyEarningsRepository.findAll();
     }
 
     @Transactional
@@ -31,8 +27,8 @@ public class EquipmentModelStateHourlyEarningsService {
             @ApiResponse(responseCode = "400", description = "Bad Request - requisição mal feita.", content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.", content = {@Content(mediaType = "application/json")})
     })
-    public EquipmentModelStateHourlyEarnings save(EquipmentModelStateHourlyEarningsDTO dto) {
-        return equipmentModelStateHourlyEarningsRepository.save(mapper.mapDtoToEntity(dto));
+    public EquipmentModelStateHourlyEarnings save(EquipmentModelStateHourlyEarnings equipmentModelStateHourlyEarnings) {
+        return equipmentModelStateHourlyEarningsRepository.save(equipmentModelStateHourlyEarnings);
     }
 
     @ApiResponses(value = {
@@ -41,11 +37,10 @@ public class EquipmentModelStateHourlyEarningsService {
             @ApiResponse(responseCode = "404", description = "Not Found - recurso não encontrado no banco de dados.", content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.", content = {@Content(mediaType = "application/json")})
     })
-    public Optional<EquipmentModelStateHourlyEarningsDTO> findById(EquipmentModelStateHourlyEarnings.EquipmentMSHE_ID id) {
+    public Optional<EquipmentModelStateHourlyEarnings> findById(EquipmentModelStateHourlyEarnings.EquipmentMSHE_ID id) {
         Optional<EquipmentModelStateHourlyEarnings> optional = equipmentModelStateHourlyEarningsRepository.findById(id);
         if (optional.isPresent()) {
-            var equipment = optional.get();
-            return Optional.of(mapper.mapEntityToDto(equipment));
+            return Optional.of(optional.get());
         }
         return Optional.empty();
     }
@@ -57,7 +52,7 @@ public class EquipmentModelStateHourlyEarningsService {
             @ApiResponse(responseCode = "404", description = "Not Found - recurso não encontrado no banco de dados.", content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.", content = {@Content(mediaType = "application/json")})
     })
-    public void delete(EquipmentModelStateHourlyEarningsDTO dto) {
-        equipmentModelStateHourlyEarningsRepository.delete(mapper.mapDtoToEntity(dto));
+    public void delete(EquipmentModelStateHourlyEarnings equip) {
+        equipmentModelStateHourlyEarningsRepository.delete(equip);
     }
 }

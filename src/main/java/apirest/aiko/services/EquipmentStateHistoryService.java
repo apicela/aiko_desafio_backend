@@ -1,6 +1,5 @@
 package apirest.aiko.services;
 
-import apirest.aiko.dtos.EquipmentStateHistoryDTO;
 import apirest.aiko.mappers.EquipmentStateHistoryMapper;
 import apirest.aiko.models.EquipmentStateHistory;
 import apirest.aiko.repositories.EquipmentStateHistoryRepository;
@@ -25,9 +24,8 @@ public class EquipmentStateHistoryService {
         return equipmentStateHistoryRepository.findAll();
     }
 
-    public List<EquipmentStateHistoryDTO> findLastState() {
-        List<EquipmentStateHistory> list = equipmentStateHistoryRepository.findLastState();
-        return mapper.mapEntityListToDtoList(list);
+    public List<EquipmentStateHistory> findLastState() {
+        return equipmentStateHistoryRepository.findLastState();
     }
 
     public String findState(UUID equipment_id) {
@@ -40,8 +38,8 @@ public class EquipmentStateHistoryService {
             @ApiResponse(responseCode = "400", description = "Bad Request - requisição mal feita.", content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.", content = {@Content(mediaType = "application/json")})
     })
-    public EquipmentStateHistory save(EquipmentStateHistoryDTO dto) {
-        return equipmentStateHistoryRepository.save(mapper.mapDtoToEntity(dto));
+    public EquipmentStateHistory save(EquipmentStateHistory equipmentStateHistory) {
+        return equipmentStateHistoryRepository.save(equipmentStateHistory);
     }
 
     @ApiResponses(value = {
@@ -50,11 +48,10 @@ public class EquipmentStateHistoryService {
             @ApiResponse(responseCode = "404", description = "Not Found - recurso não encontrado no banco de dados.", content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.", content = {@Content(mediaType = "application/json")})
     })
-    public Optional<EquipmentStateHistoryDTO> findById(EquipmentStateHistory.EquipmentSH_ID id) {
+    public Optional<EquipmentStateHistory> findById(EquipmentStateHistory.EquipmentSH_ID id) {
         Optional<EquipmentStateHistory> optional = equipmentStateHistoryRepository.findById(id);
         if (optional.isPresent()) {
-            var equipment = optional.get();
-            return Optional.of(mapper.mapEntityToDto(equipment));
+            return Optional.of(optional.get());
         }
         return Optional.empty();
     }
@@ -66,7 +63,7 @@ public class EquipmentStateHistoryService {
             @ApiResponse(responseCode = "404", description = "Not Found - recurso não encontrado no banco de dados.", content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.", content = {@Content(mediaType = "application/json")})
     })
-    public void delete(EquipmentStateHistoryDTO equipmentStateHistory) {
-        equipmentStateHistoryRepository.delete(mapper.mapDtoToEntity(equipmentStateHistory));
+    public void delete(EquipmentStateHistory equipmentStateHistory) {
+        equipmentStateHistoryRepository.delete(equipmentStateHistory);
     }
 }

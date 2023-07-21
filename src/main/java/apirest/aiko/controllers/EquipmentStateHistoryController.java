@@ -1,11 +1,14 @@
 package apirest.aiko.controllers;
 
 import apirest.aiko.dtos.EquipmentStateHistoryDTO;
+import apirest.aiko.mappers.EquipmentStateHistoryMapper;
 import apirest.aiko.models.EquipmentStateHistory;
 import apirest.aiko.services.EquipmentStateHistoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,15 +22,13 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/equipment_shc")
 @CrossOrigin("*")
+@AllArgsConstructor
 @Tag(name = "6. Equipment State History", description = "CRUD")
 
 public class EquipmentStateHistoryController {
-    final EquipmentStateHistoryService equipmentStateHistoryService;
     public static final String ENDPOINT = "/equipment_shc";
-
-    public EquipmentStateHistoryController(EquipmentStateHistoryService equipmentStateHistoryService) {
-        this.equipmentStateHistoryService = equipmentStateHistoryService;
-    }
+    final EquipmentStateHistoryService equipmentStateHistoryService;
+    final EquipmentStateHistoryMapper mapper;
 
     @PostMapping
     @Operation(summary = "CREATE", description = "Here, you can create a new object for your entity" +
@@ -36,7 +37,8 @@ public class EquipmentStateHistoryController {
             "<br>03b2d446-e3ba-4c82-8dc2-a5611fea6e1f = Maintenance" +
             "<br>0808344c-454b-4c36-89e8-d7687e692d57 = Operating")
     public ResponseEntity<Object> saveEquipmentStateHistory(@RequestBody @Valid EquipmentStateHistoryDTO equipmentStateHistoryDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body("Created successfully." + equipmentStateHistoryService.save(equipmentStateHistoryDTO));
+        var equip = new EquipmentStateHistory(equipmentStateHistoryDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(equip);
     }
 
     @GetMapping
@@ -56,7 +58,7 @@ public class EquipmentStateHistoryController {
         }
         LocalDateTime date = LocalDateTime.parse(customDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         var compositeKey = new EquipmentStateHistory.EquipmentSH_ID(equipment_id, date, state_id);
-        Optional<EquipmentStateHistoryDTO> equipmentStateHistoryModelOptional = equipmentStateHistoryService.findById(compositeKey);
+        Optional<EquipmentStateHistory> equipmentStateHistoryModelOptional = equipmentStateHistoryService.findById(compositeKey);
         if (!equipmentStateHistoryModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentStateHistory not found.");
         }
@@ -74,7 +76,7 @@ public class EquipmentStateHistoryController {
         }
         LocalDateTime date = LocalDateTime.parse(customDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         var compositeKey = new EquipmentStateHistory.EquipmentSH_ID(equipment_id, date, state_id);
-        Optional<EquipmentStateHistoryDTO> equipmentStateHistoryModelOptional = equipmentStateHistoryService.findById(compositeKey);
+        Optional<EquipmentStateHistory> equipmentStateHistoryModelOptional = equipmentStateHistoryService.findById(compositeKey);
         if (!equipmentStateHistoryModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentStateHistory not found.");
         }
@@ -97,12 +99,13 @@ public class EquipmentStateHistoryController {
         }
         LocalDateTime date = LocalDateTime.parse(customDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         var compositeKey = new EquipmentStateHistory.EquipmentSH_ID(equipment_id, date, state_id);
-        Optional<EquipmentStateHistoryDTO> equipmentStateHistoryModelOptional = equipmentStateHistoryService.findById(compositeKey);
-        if (!equipmentStateHistoryModelOptional.isPresent()) {
+        Optional<EquipmentStateHistory> optional = equipmentStateHistoryService.findById(compositeKey);
+        if (!optional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentStateHistory not found.");
         }
-        equipmentStateHistoryService.delete(equipmentStateHistoryModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Modified.\n" + equipmentStateHistoryService.save(equipmentStateHistoryDTO));
+        var equip = optional.get();
+        BeanUtils.copyProperties(equipmentStateHistoryDTO, equip);
+        return ResponseEntity.status(HttpStatus.OK).body(equipmentStateHistoryService.save(equip));
     }
 
 }

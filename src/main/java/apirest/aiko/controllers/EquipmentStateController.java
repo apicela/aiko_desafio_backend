@@ -1,10 +1,14 @@
 package apirest.aiko.controllers;
 
 import apirest.aiko.dtos.EquipmentStateDTO;
+import apirest.aiko.mappers.EquipmentStateMapper;
+import apirest.aiko.models.EquipmentState;
 import apirest.aiko.services.EquipmentStateService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,25 +20,25 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/equipment_state")
 @CrossOrigin("*")
+@AllArgsConstructor
 @Tag(name = "4. Equipment State", description = "CRUD")
 public class EquipmentStateController {
     public static final String ENDPOINT = "/equipment_state";
 
     final EquipmentStateService equipmentStateService;
+    final EquipmentStateMapper mapper;
 
-    public EquipmentStateController(EquipmentStateService equipmentStateService) {
-        this.equipmentStateService = equipmentStateService;
-    }
 
     @PostMapping
     @Operation(summary = "CREATE", description = "Here, you can create a new object for your entity")
     public ResponseEntity<Object> saveEquipmentState(@RequestBody @Valid EquipmentStateDTO equipmentStateDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body("Created successfully." + equipmentStateService.save(equipmentStateDTO));
+        var equipment = mapper.mapDtoToEntity(equipmentStateDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(equipmentStateService.save(equipment));
     }
 
     @GetMapping
     @Operation(summary = "Get all objects", description = "Here, you can get a list of objects")
-    public ResponseEntity<List<EquipmentStateDTO>> getAllEquipmentState() {
+    public ResponseEntity<List<EquipmentState>> getAllEquipmentState() {
         return ResponseEntity.status(HttpStatus.OK).body(equipmentStateService.findAll());
     }
 
@@ -44,7 +48,7 @@ public class EquipmentStateController {
         if (id == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
         }
-        Optional<EquipmentStateDTO> equipmentStateModelOptional = equipmentStateService.findById(id);
+        Optional<EquipmentState> equipmentStateModelOptional = equipmentStateService.findById(id);
         if (!equipmentStateModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentState not found.");
         }
@@ -57,7 +61,7 @@ public class EquipmentStateController {
         if (id == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
         }
-        Optional<EquipmentStateDTO> equipmentStateModelOptional = equipmentStateService.findById(id);
+        Optional<EquipmentState> equipmentStateModelOptional = equipmentStateService.findById(id);
         if (!equipmentStateModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentState not found.");
         }
@@ -72,10 +76,12 @@ public class EquipmentStateController {
         if (id == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID.");
         }
-        Optional<EquipmentStateDTO> equipmentStateModelOptional = equipmentStateService.findById(id);
-        if (!equipmentStateModelOptional.isPresent()) {
+        Optional<EquipmentState> optional = equipmentStateService.findById(id);
+        if (!optional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EquipmentState not found.");
         }
-        return ResponseEntity.status(HttpStatus.OK).body("Modified.\n" + equipmentStateService.save(equipmentStateDto));
+        var equipmentState = optional.get();
+        BeanUtils.copyProperties(equipmentStateDto, equipmentState);
+        return ResponseEntity.status(HttpStatus.OK).body(equipmentStateService.save(equipmentState));
     }
 }

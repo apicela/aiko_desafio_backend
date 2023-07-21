@@ -3,8 +3,10 @@ package apirest.aiko.models;
 import apirest.aiko.dtos.EquipmentModelStateHourlyEarningsDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -15,6 +17,8 @@ import java.util.UUID;
 @Table(name = "equipment_model_state_hourly_earnings", schema = "operation")
 @Data // create all getters and setters
 @NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class EquipmentModelStateHourlyEarnings implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -27,10 +31,11 @@ public class EquipmentModelStateHourlyEarnings implements Serializable {
 
     @Column(name = "\"value\"", nullable = false)
     private double value;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("equipment_model_id")
     @JoinColumn(name = "equipment_model_id", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_equipment_model",value = ConstraintMode.NO_CONSTRAINT),
+            foreignKey = @ForeignKey(name = "fk_equipment_model", value = ConstraintMode.NO_CONSTRAINT),
             updatable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private EquipmentModel equipmentModel;
@@ -38,7 +43,7 @@ public class EquipmentModelStateHourlyEarnings implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("equipment_state_id")
     @JoinColumn(name = "equipment_state_id", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_equipment_state",value = ConstraintMode.NO_CONSTRAINT),
+            foreignKey = @ForeignKey(name = "fk_equipment_state", value = ConstraintMode.NO_CONSTRAINT),
             updatable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private EquipmentState equipmentState;
@@ -79,6 +84,7 @@ public class EquipmentModelStateHourlyEarnings implements Serializable {
 
     @Embeddable
     @Data // create all getters and setters
+    @AllArgsConstructor
     @NoArgsConstructor
     public static class EquipmentMSHE_ID implements Serializable //Equipment Model State Hourly Earnings
     {
@@ -88,10 +94,6 @@ public class EquipmentModelStateHourlyEarnings implements Serializable {
         @Column(name = "equipment_state_id", nullable = false)
         private UUID equipment_state_id;
 
-        public EquipmentMSHE_ID(UUID id1, UUID id2) {
-            this.equipment_model_id = id1;
-            this.equipment_state_id = id2;
-        }
 
     }
 }
