@@ -1,0 +1,83 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Equipment Positions</title>
+
+
+    <style>
+        #map{
+        height:100%;
+        width:100%;}
+
+
+    </style>
+    <!-- Adiciona a chave da API do Google Maps -->
+
+    <!-- Adiciona a função initMap() -->
+
+    <script th:inline="javascript">
+        var positions = /*[[${positionsHistoryJson}]]*/ '[]';
+         // Parse the JSON string and create a marker for each position
+         var positionsArray = JSON.parse(positions);
+
+
+    </script>
+
+
+    <script th:inline="javascript">
+        function getState(statusEquipment) {
+            switch(statusEquipment){
+                case "baff9783-84e8-4e01-874b-6fd743b875ad": return "Stopped";
+                case "03b2d446-e3ba-4c82-8dc2-a5611fea6e1f": return "Maintenance";
+                case "0808344c-454b-4c36-89e8-d7687e692d57": return "Operating";
+                case "*": return "Unknown value";
+            }
+            }
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: positionsArray[0].lat, lng: positionsArray[0].lon},
+                zoom: 9
+            });
+
+           for (var i = 0; i < positionsArray.length; i++) {
+                var status;
+                 status = getState(positionsArray[i].statusEquipment);
+                var color;
+                if (status === 'Operating') {
+                   color = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+                } else if (status === 'Maintenance') {
+                   color = 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png';
+                } else {
+                    color = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+                }
+                console.log('i: ' + i + 'color: ' + positionsArray[i].statusEquipment);
+                console.log('lat:'+ positionsArray[i].lat+', lng:'+ positionsArray[i].lon)
+                var marker = new google.maps.Marker({
+                    position: {lat: positionsArray[i].lat, lng: positionsArray[i].lon},
+                    map: map,
+                    title: 'Equipment ' + (positionsArray[i].nameEquipment) + '\nStatus: ' + status,
+                    icon: { url: color }
+
+                });
+            }
+
+        }
+
+
+    </script>
+
+
+    <script async
+            defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD43jBxZbPDo3x_yjGGrHPiyJ5XCgmonl4&callback=initMap"></script>
+
+</head>
+<body onload="initMap()">
+
+<!-- Adiciona uma div para conter o mapa -->
+<div id="map"></div>
+
+</body>
+</html>

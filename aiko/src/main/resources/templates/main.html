@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>API Rest jamilzin1</title>
+    <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap' rel='stylesheet'
+          th:href="@{https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap}"/>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function carregarPagina(pagina) {
+        $(".middle").load(pagina);
+ }
+
+
+    </script>
+
+
+    <style th:inline="css">
+        :root{
+            --primary-color: rgb(26, 26, 26);
+            --second-color: rgb(19, 18, 18);
+            --overview-color: rgba(19,18,18,0.85);
+            --blue-color:rgb(152, 198, 241);
+            --dourado: rgb(253, 212, 90);
+        }
+
+            body{
+            height: 100vh;
+            background-color: var(--second-color);
+            display:flex;
+        }
+
+        .leftMenu{
+            background-color: var(--second-color);
+            width:24vh;
+            height: 100vh;
+            box-shadow: 0 0px 3px 0 rgb(8, 8, 8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+    #buttonDiv {
+        margin-top: 5vh;
+        margin-bottom: 5vh;
+        display:flex;
+        height:100%;
+        width:100%;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+
+    button {
+        border-color: rgb(8, 8, 8);
+        font-family: 'Candara';
+        color: var(--dourado);
+        font-size: 100%;
+        height: 100px;
+        width: 100%;
+        background-color: var(--second-color);
+    }
+        .middle{
+            background-color: var(--primary-color);
+            box-shadow: 0 0px 1.5px 0 black;
+            margin: 5vh;
+            height: 90vh;
+            width: 80%;
+            overflow-x: none;
+            overflow-y: scroll;
+            color:white;
+        }
+
+        iframe{
+            border:none;
+            height:100%;
+            width: 100%;
+        }
+
+
+    </style>
+</head>
+<body onload="carregarPagina('/projeto')">
+
+<div class="leftMenu">
+    <div id="buttonDiv">
+        <button onclick="carregarPagina('/projeto')">Projeto</button>
+        <button onclick="carregarPagina('/swagger')">API de CRUD</button>
+        </a>
+        <button onclick="carregarPagina('/stateHistory')">Histórico de Estados</button>
+        <button onclick="carregarPagina('/positionMap')">Mapa de Equipamentos</button>
+    </div>
+</div>
+<div class="middle" id="middle">
+
+</div>
+
+</body>
+</html>
+
+
