@@ -1,28 +1,29 @@
 version: '3'
 services:
-  myapp:
+  db:
+    image: postgres:latest
+    container_name: bancoDados
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: AP1c3la!123
+      POSTGRES_DB: apicela
+    volumes:
+       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+       
+  apicela_aiko_app:
     build:
       context: .
       dockerfile: Dockerfile
-    image: myapp
-    container_name: application
+    container_name: apicela_aiko
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db/jamilzin1_db_apirest_test
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db/apicela
       - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=SECjam1lz1n
+      - SPRING_DATASOURCE_PASSWORD=AP1c3la!123
     ports:
       - "8080:8080"
     depends_on:
       - db
     volumes:
-      - ./target:/app/target  # Mount the 'target' directory as a volume for live reloading
-
-  db:
-    image: postgres
-    container_name: bancoDados
-    environment:
-      - POSTGRES_DB=jamilzin1_db_apirest_test
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=SECjam1lz1n
-    volumes:
-      - ./postgres-data:/var/lib/postgresql/data
+      - .:/app       
+    restart: unless-stopped
