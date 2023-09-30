@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import java.util.UUID;
 @CrossOrigin("*")
 @AllArgsConstructor
 @Tag(name = "4. Equipment State", description = "CRUD")
+@Log4j2
 public class EquipmentStateController {
     public static final String ENDPOINT = "/equipment_state";
 
@@ -32,7 +34,9 @@ public class EquipmentStateController {
     @PostMapping
     @Operation(summary = "CREATE", description = "Here, you can create a new object for your entity")
     public ResponseEntity<Object> saveEquipmentState(@RequestBody @Valid EquipmentStateDTO equipmentStateDTO) {
+        log.info(equipmentStateDTO.toString());
         var equipment = mapper.mapDtoToEntity(equipmentStateDTO);
+        log.info(equipment.toString());
         return ResponseEntity.status(HttpStatus.CREATED).body(equipmentStateService.save(equipment));
     }
 

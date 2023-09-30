@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CRUD</title>
+    <title>API Rest - Apicela CRUD - Aiko</title>
     <style>
         #container{
       margin-left: 15%;
@@ -26,13 +26,13 @@
 <body style="background-color:rgb(26, 26, 26);color:white;">
 
 <div id="container">
-    <h1 align="center" id="api-rest-de-crud" style="color:rgb(253, 212, 90);">API Rest de CRUD</h1>
+    <h1 align="center" id="api-rest-de-crud" style="color:rgb(253, 212, 90);">AIKO - Desafio backend -  APIREST</h1>
     <p align="center">
         <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white"/>
         <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"/>
         <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white"/>
         <img src="https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white"><br>
-        <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=RED&style=for-the-badge"/>
+        <img src="http://img.shields.io/static/v1?label=STATUS&message=CONCLUIDO&color=RED&style=for-the-badge"/>
     </p>
 
     <h2 id="o-desafio" style="color:rgb(253, 212, 90)">O Desafio</h2>
@@ -62,8 +62,8 @@
         ✅ Testes <br></p>
     <h3 id="📋-pré-requisitos">📋 Pré-requisitos</h3>
     <ul>
-        <li>Java <br></li>
-        <li>Docker<br></li>
+        <li>Java 17+<br></li>
+        <li>Gradle 6.4+<br></li>
     </ul>
     <h3 id="🛠️-ferramentas-utilizadas">🛠️ Ferramentas utilizadas</h3>
     <ul>
@@ -75,11 +75,11 @@
         <li><a href="https://www.docker.com/">Docker</a> - Utilizado para build, teste e deploy da aplicação</li>
         <li><a href="https://swagger.io/tools/swagger-ui/">SwaggerUI</a> - Interface utilizada para documentação da API
         </li>
-        <li><a href="https://maven.apache.org/">Maven</a> - Gerente de Dependência</li>
+        <li><a href="https://gradle.org/">Gradle</a> - Gerenciador de Dependência</li>
     </ul>
     <h3 id="💻-por-dentro-da-aplicação">💻 Por dentro da aplicação</h3>
-    <img src="https://raw.githubusercontent.com/aikodigital/teste-backend-estagio-v3/master/img/diagram.png"
-         style="width:100%;"/>
+    <img  src="https://raw.githubusercontent.com/aikodigital/teste-backend-estagio-v3/master/img/diagram.png"
+         style="max-width=950px;"/>
 
 
     <p>O primeiro passo é compreendermos a <a
@@ -164,7 +164,7 @@
     <pre><code>  @JsonIgnore
     public EquipmentPositionHistoryPK getEquipmentPositionHistoryPK() {
         return equipmentPositionHistoryPK;
-    }  
+    }
 </code></pre>
     <p>Ao fazer isto, digo ao Hibernate para não se preocupar em retornar um objeto do
         tipo EquipmentPositionHistory, no momento da geração do arquivo padrão <a
@@ -189,19 +189,7 @@
     <p><code>cascade = CascadeType.ALL</code> - É o tipo das <a href="https://www.baeldung.com/jpa-cascade-types">propagações</a>
         que uma ação na entidade ocorrerá.
         <br></p>
-    <p><code>orphanRemoval = true</code> - Uma anotação que basicamente diz que, caso Equipment seja filho de
-        EquipmentModel, se EquipmentModel for excluído do banco de dados, seus filhos serão excluídos também.
-        <br></p>
-    <p>Ex:</p>
-    <pre><code>public class EquipmentModel {
-@OneToMany(mappedBy = &quot;equipmentModel&quot;, cascade = CascadeType.ALL,orphanRemoval = true)
-    private List&lt;Equipment&gt; equipments;
-} 
-</code></pre>
-    <br>
 
-    <p>Caso EquipmentModel seja excluído, está exclusão se propagará para toda lista de Equipments referentes ao
-        EquipmentModel.</p>
     <h3 id="criação-das-páginas-web">Criação das páginas WEB</h3>
     <p>Por padrão do Spring MVC, as páginas HTML são armazenadas em <code>src/main/resources/templates</code>. Como o
         projeto não é focado no frontend, são páginas simples.
@@ -227,33 +215,6 @@
         disponível pelo Google. </p>
     <p>Para realizar a implementação da API, que é dada em JavaScript, em nossa aplicação Java, podemos utilizar a
         anotação <code>&lt;script th:inline=&quot;javascript&quot;&gt;</code> de nosso <em>Thymeleaf</em>, </p>
-    <h3 id="dockerizando-a-aplicação">Dockerizando a aplicação</h3>
-    <p>A conteinirização do aplicativo é algo bem simples de configurar, na pasta raíz do projeto, possuímos <code>Dockerfile</code>
-        e <code>docker-compose.yml</code>, que armazenam as configurações de nosso container.<br> Resumidamente, nesta
-        aplicação criaremos um container para armazenar o SpringBoot(container: jamilzin1APP), configurando o arquivo
-        <code>Dockerfile</code> para executar nosso arquivo .jar dentro do container.<br>
-        E outro container, para armazenar o banco de dados postgres(container: dbAPP), no arquivo <code>docker-compose.yml</code>
-        sua configuração é bem simples, apenas destaco a linha que definimos &quot;volumes&quot; que mapeamos a pasta
-        &quot;postgres-data&quot; para persistir os dados, preservando-os mesmo após as reiniciações do container,
-        facilitando também para um possível backup.</p>
-    <h2 id="⚙️-como-configurar-para-teste-da-aplicação">⚙️ Como configurar para teste da aplicação</h2>
-    <ol>
-        <li>Clone this repo: <code>git clone https://github.com/jamilzin1/API_Rest_de_CRUD_SpringBoot.git</code>
-        <li> Abra o terminal no diretório do arquivo.</li>
-        <li>Execute o docker: <code>docker-compose up</code></li>
-        <li>Restaure o banco de dados da aplicação. Execute o terminal para a pasta onde está salvo o repositório e
-            use
-        </li>
-        <p><code>docker exec -i dbAPP pg_restore -U postgres -d jamilzin1_db_apirest_test &lt; data.sql</code>
-            <li> Acesse <a href="http://localhost:8080/main">http://localhost:8080/main</a></li>
-    </ol>
-
-    <br></p>
-    <p><strong>Fim!</strong></p>
-    <p>Você está pronto para desfrutar da aplicação :) </p>
-    <h2 id="▶️-testes-da-aplicação">▶️ Testes da aplicação</h2>
-    <p>// Teste parcial, ainda irei realizar algumas mudanças, como adição de filtros na posição dos equipamentos no
-        mapa.</p>
 </div>
 </body>
 </html>

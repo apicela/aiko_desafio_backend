@@ -44,6 +44,7 @@ public class Equipment implements Serializable {
     private List<EquipmentStateHistory> equipmentStateHistories;
 
     public Equipment(EquipmentDTO equipmentDTO) {
+        this.equipmentModel = new EquipmentModel();
         equipmentModel.setId(equipmentDTO.getEquipment_model_id());
         this.name = equipmentDTO.getName();
         this.equipment_model_id = equipmentDTO.getEquipment_model_id();

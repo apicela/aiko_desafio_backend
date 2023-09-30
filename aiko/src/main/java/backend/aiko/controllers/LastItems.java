@@ -17,14 +17,14 @@ import java.util.List;
 
 @RestController
 @Tag(name = "1. Last status of Equipments", description = "Estado e Posição mais recente dos equipamentos")
-@RequestMapping("/finalEndpoint")
+@RequestMapping("/last")
 @CrossOrigin("*")
-public class EndPointController {
+public class LastItems {
 
     final EquipmentPositionHistoryService equipmentPositionHistoryService;
     final EquipmentStateHistoryService equipmentStateHistoryService;
 
-    public EndPointController(EquipmentPositionHistoryService equipmentPositionHistoryService, EquipmentStateHistoryService equipmentStateHistoryService) {
+    public LastItems(EquipmentPositionHistoryService equipmentPositionHistoryService, EquipmentStateHistoryService equipmentStateHistoryService) {
         this.equipmentPositionHistoryService = equipmentPositionHistoryService;
         this.equipmentStateHistoryService = equipmentStateHistoryService;
     }
