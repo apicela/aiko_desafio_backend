@@ -25,7 +25,7 @@ public class EquipmentPositionHistoryService {
 
 
     public List<EquipmentPositionHistory> findAll() {
-        return equipmentPositionHistoryRepository.findLastPosition();
+        return equipmentPositionHistoryRepository.findAll();
     }
 
     @Transactional

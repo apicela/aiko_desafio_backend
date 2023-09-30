@@ -44,12 +44,9 @@ public class Equipment implements Serializable {
     private List<EquipmentStateHistory> equipmentStateHistories;
 
     public Equipment(EquipmentDTO equipmentDTO) {
-        var equipmentModel = new EquipmentModel();
         equipmentModel.setId(equipmentDTO.getEquipment_model_id());
         this.name = equipmentDTO.getName();
         this.equipment_model_id = equipmentDTO.getEquipment_model_id();
-        this.equipmentModel = equipmentModel;
-
     }
 
 
@@ -75,8 +72,7 @@ public class Equipment implements Serializable {
         return "Equipment:\n" +
                 "Id:" + id +
                 "\nName:" + name
-                + "\nequipment_model_id:" + equipmentModel.getId()
-                ;
+                + "\nequipment_model_id:" + equipmentModel.getId();
     }
 
 }

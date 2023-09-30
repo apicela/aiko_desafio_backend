@@ -52,14 +52,6 @@ public class EquipmentModelStateHourlyEarnings implements Serializable {
         this.value = equipmentModelStateHourlyEarningsDTO.getValue();
     }
 
-    @Override
-    public String toString() {
-        return "Equipment Model State Hourly Earnings:" +
-                "\nequipment_model_id: " + equipmentMSHE_id.equipment_model_id +
-                "\nequipment_state_id: " + equipmentMSHE_id.equipment_state_id +
-                "\nvalue: " + getValue();
-    }
-
     @JsonIgnore
     public EquipmentMSHE_ID getEquipmentMSHE_id() {
         return equipmentMSHE_id;
@@ -75,6 +67,13 @@ public class EquipmentModelStateHourlyEarnings implements Serializable {
         return equipmentState;
     }
 
+    @Override
+    public String toString() {
+        return "Equipment Model State Hourly Earnings:" +
+                "\nequipment_model_id: " + equipmentMSHE_id.equipment_model_id +
+                "\nequipment_state_id: " + equipmentMSHE_id.equipment_state_id +
+                "\nvalue: " + getValue();
+    }
 
     @Embeddable
     @Data // create all getters and setters

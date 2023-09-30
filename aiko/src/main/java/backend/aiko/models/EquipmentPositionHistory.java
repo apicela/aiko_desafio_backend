@@ -42,12 +42,10 @@ public class EquipmentPositionHistory implements Serializable {
     private LocalDateTime date;
 
 
-    public EquipmentPositionHistory(EquipmentPositionHistoryDTO equipmentPositionHistoryDTO) {
-        this.equipment = new Equipment();
-        equipmentPositionHistoryPK = new EquipmentPositionHistoryPK(equipmentPositionHistoryDTO.getEquipment_id(), equipmentPositionHistoryDTO.getDate());
-        equipment.setId(equipmentPositionHistoryDTO.getEquipment_id());
-        this.lat = equipmentPositionHistoryDTO.getLat();
-        this.lon = equipmentPositionHistoryDTO.getLon();
+    public EquipmentPositionHistory(EquipmentPositionHistoryDTO dto) {
+        equipmentPositionHistoryPK = new EquipmentPositionHistoryPK(dto.getEquipment_id(), dto.getDate());
+        this.lat = dto.getLat();
+        this.lon = dto.getLon();
     }
 
     @JsonIgnore

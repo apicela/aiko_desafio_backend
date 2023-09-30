@@ -44,6 +44,7 @@ public class EquipmentModel implements Serializable {
         return equipments;
     }
 
+
     @Override
     public String toString() {
         return "Equipment Model:\n" +

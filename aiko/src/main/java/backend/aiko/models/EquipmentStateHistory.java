@@ -48,13 +48,13 @@ public class EquipmentStateHistory implements Serializable {
     @Column(name = "equipment_state_id", nullable = false, insertable = false, updatable = false)
     private UUID equipment_state_id;
 
-    public EquipmentStateHistory(EquipmentStateHistoryDTO equipmentStateHistoryDTO) {
-        equipmentState = new EquipmentState();
-        equipment = new Equipment();
-        equipmentSH_id = new EquipmentSH_ID();
-        equipmentState.setId(equipmentStateHistoryDTO.getEquipment_state_id());
-        equipment.setId(equipmentStateHistoryDTO.getEquipment_id());
-        equipmentSH_id.setDate(equipmentStateHistoryDTO.getDate());
+    public EquipmentStateHistory(EquipmentStateHistoryDTO dto) {
+        equipmentSH_id = new EquipmentSH_ID(dto.getEquipment_id(), dto.getDate(), dto.getEquipment_state_id());
+    }
+
+    @JsonIgnore
+    public Equipment getEquipment() {
+        return equipment;
     }
 
     @JsonIgnore
@@ -63,15 +63,10 @@ public class EquipmentStateHistory implements Serializable {
     }
 
     @JsonIgnore
-    public Equipment getEquipment() {
-        return equipment;
-    }
-
-
-    @JsonIgnore
     public EquipmentState getEquipmentState() {
         return equipmentState;
     }
+
 
     @Override
     public String toString() {
