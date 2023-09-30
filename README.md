@@ -48,7 +48,7 @@ API realizada no Swagger.
 :heavy_check_mark: Página Histórico de estados <br>
 :heavy_check_mark: Conteinerização <br>
 :heavy_check_mark: Mapa de Equipamentos <br>
-⏳ Testes (Encontrei uns bugs no teste, removi para manutenção)<br>
+:heavy_check_mark: Teste<br>
 
 
 ### 📋 Pré-requisitos
