@@ -4,7 +4,7 @@
   <img src="https://img.shields.io/badge/Java-000?style=for-the-badge&logo=java&logoColor=white"/>
   <img src="https://img.shields.io/badge/Spring-000?style=for-the-badge&logo=spring&logoColor=green"/>
   <img src="https://img.shields.io/badge/PostgreSQL-black?style=for-the-badge&logo=postgresql&logoColor=blue"/>
-  <br> <img src="http://img.shields.io/static/v1?label=STATUS&message=OK&color=RED&style=for-the-badge"/>
+  <br> <img src="http://img.shields.io/static/v1?label=STATUS&message=concluido&color=RED&style=for-the-badge"/>
 </p>
 
 ## O Desafio
@@ -27,14 +27,14 @@ API realizada no Swagger.
 ### Método 1 - Utilizando Docker (recomendado) - não requer Java e Gradle instalados em sua máquina:
 1. Clone este repositório: ``` git clone https://github.com/apicela/aiko_desafio_backend.git ```
 2. Abra o terminal no diretório do arquivo `aiko_desafio_backend/aiko/`.
-3. Execute o seguinte comando no terminal: ```docker build -t aiko_apicela . && docker run -p 8080:8080 aiko_apicela```
-4. Acesse a interface pelo navegador: http://localhost:8080/swagger-ui/index.html
+3. Execute o seguinte comando no terminal: ```docker-compose up --build```
+4. Acesse a interface pelo navegador: http://localhost:8080/main
    <br>
 ### Método 2 - Utilizando Java 17+ e Gradle 6.4+
 1. Clone este repositório: ``` git clone https://github.com/apicela/aiko_desafio_backend.git ```
 2. Abra o terminal no diretório do arquivo `aiko_desafio_backend/aiko/`.
 3. Execute o seguinte comando no terminal: ```./gradlew build && ./gradlew bootRun```
-4. Acesse a interface pelo navegador: http://localhost:8080/swagger-ui/index.html
+4. Acesse a interface pelo navegador: http://localhost:8080/main
    <br>
 
 
