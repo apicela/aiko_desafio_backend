@@ -2,9 +2,7 @@ package backend.aiko.testes.unitarios;
 
 import backend.aiko.builder.EquipmentBuilder;
 import backend.aiko.controllers.EquipmentStateController;
-import backend.aiko.dtos.EquipmentModelDTO;
 import backend.aiko.mappers.EquipmentMapper;
-import backend.aiko.models.EquipmentPositionHistory;
 import backend.aiko.repositories.EquipmentStateRepository;
 import backend.aiko.services.EquipmentStateService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,7 +46,7 @@ public class TestEquipmentState {
     @Autowired
     private MockMvc mvc;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
 
     // test unitario
@@ -71,11 +69,11 @@ public class TestEquipmentState {
     @DisplayName("TESTE SERVICE -  save, delete")
     void testServiceDelete_status200() throws Exception {
         var size = equipmentStateRepository.findAll().size();
-        var saved = equipmentStateRepository.findAll().get(size-1);
+        var saved = equipmentStateRepository.findAll().get(size - 1);
         Assertions.assertNotNull(saved);
         log.info("saved {}", saved);
         equipmentStateService.delete(saved);
-        assertThrows(IndexOutOfBoundsException.class, () -> equipmentStateRepository.findAll().get(size-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> equipmentStateRepository.findAll().get(size - 1));
 
     }
 
@@ -119,7 +117,7 @@ public class TestEquipmentState {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(equip.getName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.color").value(equip.getColor().toString()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.color").value(equip.getColor()))
                 .andDo(print())
                 .andReturn();
     }
@@ -164,8 +162,8 @@ public class TestEquipmentState {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(equip.getId().toString()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(equip.getName().toString()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.color").value(equip.getColor().toString()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(equip.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.color").value(equip.getColor()))
                 .andDo(print());
 
         assertNotEquals(equip.getName(), oldname);

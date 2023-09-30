@@ -3,7 +3,6 @@ package backend.aiko.testes.unitarios;
 import backend.aiko.builder.EquipmentBuilder;
 import backend.aiko.controllers.EquipmentModelController;
 import backend.aiko.mappers.EquipmentModelMapper;
-import backend.aiko.models.EquipmentPositionHistory;
 import backend.aiko.repositories.EquipmentModelRepository;
 import backend.aiko.services.EquipmentModelService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -67,11 +66,11 @@ public class TestEquipmentModel {
     @DisplayName("TESTE SERVICE -  save, delete")
     void testServiceDelete_status200() throws Exception {
         var size = equipmentModelRepository.findAll().size();
-        var saved = equipmentModelRepository.findAll().get(size-1);
+        var saved = equipmentModelRepository.findAll().get(size - 1);
         assertNotNull(saved);
         log.info("saved {}", saved);
         equipmentModelService.delete(saved);
-        assertThrows(IndexOutOfBoundsException.class, () -> equipmentModelRepository.findAll().get(size-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> equipmentModelRepository.findAll().get(size - 1));
 
     }
 

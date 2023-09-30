@@ -7,11 +7,8 @@ import backend.aiko.repositories.EquipmentStateRepository;
 import com.github.javafaker.Faker;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.log4j.Log4j2;
-import org.junit.BeforeClass;
-import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -29,7 +26,6 @@ public class EquipmentBuilder {
     Faker faker = new Faker();
 
     @PostConstruct
-    @BeforeClass
     public void initialize() {
         EquipmentModel model = new EquipmentModel();
         model.setName("EQUIPMENT MODEL TESTE");

@@ -3,7 +3,6 @@ package backend.aiko.testes.unitarios;
 import backend.aiko.builder.EquipmentBuilder;
 import backend.aiko.controllers.EquipmentController;
 import backend.aiko.mappers.EquipmentMapper;
-import backend.aiko.models.EquipmentPositionHistory;
 import backend.aiko.repositories.EquipmentRepository;
 import backend.aiko.services.EquipmentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,7 +35,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 public class TestEquipment {
 
 
-
     @Autowired
     EquipmentService equipmentService;
 
@@ -53,7 +51,7 @@ public class TestEquipment {
     private MockMvc mvc;
 
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     // test unitario
     @Test

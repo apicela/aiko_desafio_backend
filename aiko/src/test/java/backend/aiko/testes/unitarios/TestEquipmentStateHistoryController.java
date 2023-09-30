@@ -3,7 +3,6 @@ package backend.aiko.testes.unitarios;
 import backend.aiko.builder.EquipmentBuilder;
 import backend.aiko.controllers.EquipmentStateHistoryController;
 import backend.aiko.mappers.EquipmentModelStateHourlyEarningsMapper;
-import backend.aiko.models.EquipmentStateHistory;
 import backend.aiko.repositories.EquipmentStateHistoryRepository;
 import backend.aiko.services.EquipmentStateHistoryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @ExtendWith({SpringExtension.class})
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Log4j2
-public class TestEquipmentStateHistoryController  {
+public class TestEquipmentStateHistoryController {
     @Autowired
     EquipmentStateHistoryService equipmentStateHistoryService;
     @Autowired
@@ -49,7 +48,7 @@ public class TestEquipmentStateHistoryController  {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     @Autowired
     private MockMvc mvc;
-    private ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
+    private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
     // test unitario
     @Test

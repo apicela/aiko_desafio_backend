@@ -3,7 +3,6 @@ package backend.aiko.testes.unitarios;
 import backend.aiko.builder.EquipmentBuilder;
 import backend.aiko.controllers.EquipmentPositionHistoryController;
 import backend.aiko.mappers.EquipmentModelStateHourlyEarningsMapper;
-import backend.aiko.models.EquipmentPositionHistory;
 import backend.aiko.repositories.EquipmentPositionHistoryRepository;
 import backend.aiko.services.EquipmentPositionHistoryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,7 +48,7 @@ public class TestEquipmentPositionHistory {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     @Autowired
     private MockMvc mvc;
-    private ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
+    private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
     // test unitario
     @Test
