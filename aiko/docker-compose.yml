@@ -1,17 +1,17 @@
 version: '3'
 services:
   db:
-    image: postgres:latest
-    container_name: bancoDados
+    image: postgres
+    container_name: banco_dados
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: AP1c3la!123
       POSTGRES_DB: apicela
     volumes:
-       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
-       
-  apicela_aiko_app:
+
+  apicela_app:
     build:
       context: .
       dockerfile: Dockerfile
@@ -25,5 +25,5 @@ services:
     depends_on:
       - db
     volumes:
-      - .:/app       
+      - .:/app
     restart: unless-stopped
