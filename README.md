@@ -65,11 +65,15 @@ API realizada no Swagger.
 * [Gradle](https://gradle.org/) - Gerenciador de Dependências
 * [Banco de dados H2](https://www.h2database.com/html/main.html) - Utilizado para simular um banco de dados
 
+### Diagrama de classes da aplicação
+
+![image](https://github.com/apicela/aiko_desafio_backend/assets/105384228/6b81eb7f-0b3e-4be8-9de0-4cf461f242d4)
+
+
 ## 📝 Interface da aplicação
 
-<br>
+![image](https://github.com/apicela/aiko_desafio_backend/assets/105384228/5dd6c534-4a36-4427-b6be-2e1fc8441098)
 
-[irei adicionar imagem]
 
 ## 💻 Utilização da API na prática
 <br>
