@@ -1,12 +1,10 @@
 FROM gradle:8.2.1-jdk17
 
-COPY . /app
+COPY . /
 
-WORKDIR /app
+WORKDIR /
 
-RUN gradle build
-
-#COPY build/libs/aiko-0.0.1-SNAPSHOT.jar /apicela_backend_aiko.jar
+RUN gradle build 
 
 # Expose the default Spring Boot port
 EXPOSE 8080
