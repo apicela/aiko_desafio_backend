@@ -78,7 +78,7 @@ API realizada no Swagger.
 ## 💻 Utilização da API na prática
 <br>
 
-[irei adicionar imagem]
+https://github.com/apicela/aiko_desafio_backend/assets/105384228/45719376-9974-416b-aba9-5a9c65bc834f
 
 <br>
 
