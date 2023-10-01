@@ -55,7 +55,6 @@ public class TestEquipmentStateHistoryController {
     @Order(0)
     @DisplayName("TESTE SERVICE - save, findby")
     void testService() throws Exception {
-        builder.initialize();
         // creating a model
         var equip = builder.createEquipmentStateHistory();
         // saving into db using service
@@ -95,6 +94,8 @@ public class TestEquipmentStateHistoryController {
     @DisplayName("POST - CREATED")
     void postEquipMSHE_http201() throws Exception {
         var equip = builder.createEquipmentStateHistory();
+        var state = builder.createEquipmentState();
+        equip.setEquipmentState(state);
         equipmentStateHistoryRepository.save(equip);
         mvc.perform(MockMvcRequestBuilders.post(EquipmentStateHistoryController.ENDPOINT)
                         .contentType(MediaType.APPLICATION_JSON)

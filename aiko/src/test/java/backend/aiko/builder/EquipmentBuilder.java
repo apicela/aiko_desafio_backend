@@ -70,6 +70,7 @@ public class EquipmentBuilder {
         equipmentState.setId(UUID.randomUUID());
         equipmentState.setColor(faker.color().name());
         equipmentState.setName(faker.relationships().any());
+        equipmentStateRepository.save(equipmentState);
         return equipmentState;
     }
 
