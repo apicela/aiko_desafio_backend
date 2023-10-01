@@ -1,6 +1,7 @@
 package backend.aiko.exceptions;
 
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -32,9 +33,15 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
         ArrayList<String> errors = new ArrayList<>();
         // Adicione o tratamento específico para a exceção HttpMessageNotReadableException
-        errors.add("Erro na leitura da mensagem HTTP: " + ex.getMessage());
+        errors.add("Erro na leitura da mensagem HTTP, verifique se os campos estão preenchidos de acordo com o requerido. ");
         // Retorne uma ResponseEntity contendo a lista de erros e o status HTTP apropriado
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Object> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Verifique se os dados estão corretos, " +
+                "houve um problema de referência com a `id` utilizada");
     }
 
 }

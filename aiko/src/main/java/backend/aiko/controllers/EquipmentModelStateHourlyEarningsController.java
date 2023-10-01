@@ -36,7 +36,8 @@ public class EquipmentModelStateHourlyEarningsController {
     @Operation(summary = "CREATE", description = "Here, you can create a new object for your entity")
     public ResponseEntity<Object> saveEquipmentModelStateHourlyEarnings(@RequestBody @Valid EquipmentModelStateHourlyEarningsDTO equipmentModelStateHourlyEarningsDTO) {
         var equipmentModelStateHourlyEarningsModel = new EquipmentModelStateHourlyEarnings(equipmentModelStateHourlyEarningsDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(equipmentModelStateHourlyEarningsService.save(equipmentModelStateHourlyEarningsModel));
+        equipmentModelStateHourlyEarningsService.save(equipmentModelStateHourlyEarningsModel);
+        return ResponseEntity.status(HttpStatus.CREATED).body(equipmentModelStateHourlyEarningsModel.toString());
     }
 
     @GetMapping

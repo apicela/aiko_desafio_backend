@@ -14,41 +14,41 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
-@Table(name = "equipment", schema = "operation")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Equipment implements Serializable {
-    private static final long serialVersionUID = 1L;
+    @Entity
+    @Table(name = "equipment", schema = "operation")
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public class Equipment implements Serializable {
+        private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue
-    private UUID id;
+        @Id
+        @GeneratedValue
+        private UUID id;
 
-    @NotNull
-    private String name;
+        @NotNull
+        private String name;
 
-    @Column(insertable = false, updatable = false)
-    private UUID equipment_model_id;
+        @Column(insertable = false, updatable = false)
+        private UUID equipment_model_id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "equipment_model_id", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_equipment_model"),
-            updatable = false)
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
-    private EquipmentModel equipmentModel;
-    @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL)
-    private List<EquipmentPositionHistory> equipmentPositionHistories;
-    @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL)
-    private List<EquipmentStateHistory> equipmentStateHistories;
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "equipment_model_id", referencedColumnName = "id",
+                foreignKey = @ForeignKey(name = "fk_equipment_model"),
+                updatable = false)
+        @OnDelete(action = OnDeleteAction.NO_ACTION)
+        private EquipmentModel equipmentModel;
+        @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL)
+        private List<EquipmentPositionHistory> equipmentPositionHistories;
+        @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL)
+        private List<EquipmentStateHistory> equipmentStateHistories;
 
-    public Equipment(EquipmentDTO equipmentDTO) {
-        this.equipmentModel = new EquipmentModel();
-        equipmentModel.setId(equipmentDTO.getEquipment_model_id());
-        this.name = equipmentDTO.getName();
-        this.equipment_model_id = equipmentDTO.getEquipment_model_id();
-    }
+        public Equipment(EquipmentDTO equipmentDTO) {
+            this.equipmentModel = new EquipmentModel();
+            equipmentModel.setId(equipmentDTO.getEquipment_model_id());
+            this.name = equipmentDTO.getName();
+            this.equipment_model_id = equipmentDTO.getEquipment_model_id();
+        }
 
 
     //Getters and Setters
