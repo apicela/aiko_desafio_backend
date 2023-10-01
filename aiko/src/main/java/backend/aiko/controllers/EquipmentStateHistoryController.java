@@ -38,7 +38,7 @@ public class EquipmentStateHistoryController {
             "<br>0808344c-454b-4c36-89e8-d7687e692d57 = Operating")
     public ResponseEntity<Object> saveEquipmentStateHistory(@RequestBody @Valid EquipmentStateHistoryDTO equipmentStateHistoryDTO) {
         var equip = new EquipmentStateHistory(equipmentStateHistoryDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(equip);
+        return ResponseEntity.status(HttpStatus.CREATED).body(equipmentStateHistoryService.save(equip));
     }
 
     @GetMapping

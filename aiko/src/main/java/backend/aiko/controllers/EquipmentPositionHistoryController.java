@@ -34,7 +34,8 @@ public class EquipmentPositionHistoryController {
     @Operation(summary = "CREATE", description = "Here, you can create a new object for your entity")
     public ResponseEntity<Object> saveEquipmentPositionHistory(@RequestBody @Valid EquipmentPositionHistoryDTO equipmentPositionHistoryDTO) {
         var equip = new EquipmentPositionHistory(equipmentPositionHistoryDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(equipmentPositionHistoryService.save(equip));
+        equipmentPositionHistoryService.save(equip);
+        return ResponseEntity.status(HttpStatus.CREATED).body(equip.toString());
     }
 
     @GetMapping

@@ -44,6 +44,8 @@ public class EquipmentPositionHistory implements Serializable {
 
     public EquipmentPositionHistory(EquipmentPositionHistoryDTO dto) {
         equipmentPositionHistoryPK = new EquipmentPositionHistoryPK(dto.getEquipment_id(), dto.getDate());
+        this.equipment = new Equipment();
+        equipment.setId(dto.getEquipment_id());
         this.lat = dto.getLat();
         this.lon = dto.getLon();
     }
